@@ -1,14 +1,40 @@
-/* General styling */
+/* General Styling */
 body {
     margin: 0;
-    padding: 0;
-    font-family: "lores-12", sans-serif;
-    overflow: hidden;
+    font-family: "Roboto Condensed", Arial, Helvetica, sans-serif;
+    color: #8e4585;
 }
 
-/* ############### INDEX PAGE STYLING ############### */
+/* Navigation Bar */
+nav {
+    color: white;
+    padding: 0.5em 0;
+    text-align: left;
+}
 
-/* Background container */
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: right;
+    gap: 2em;
+    margin-right: 2em; 
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 2em;
+    font-weight: bold;
+    font-family: "Birthstone", cursive;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* Background and Overlay */
 .background {
     position: fixed;
     top: 0;
@@ -18,61 +44,136 @@ body {
     background-image: url("../resources/fall_background.jpg");
     background-size: cover;
     background-position: center;
-    filter: blur(15px); /* Adjust the blur intensity */
-    z-index: -2; /* Ensure it stays behind the content */
+    filter: blur(15px);
+    z-index: -2;
 }
 
-/* Overlay for purple opacity */
 .overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(142, 69, 133, 0.8); /* Purple overlay */
-    z-index: -1; /* Sits above the background but below the content */
+    background-color: rgba(142, 69, 133, 0.8);
+    z-index: -1;
 }
 
-/* Content container */
+/* Content Styling */
 .content {
-    position: relative;
-    z-index: 1;
-    text-align: center; /* Centers all text and images */
+    text-align: center;
     color: white;
+    padding: 2em 0;
 }
 
-/* Profile image styling */
 .content img {
-    width: 12%;
-    margin: 0;
-    padding: 0;
-    border: 10px solid rgba(0, 0, 0, 0.3); /* Semi-transparent white border */
-    border-radius: 50%; /* Makes the image circular */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional: Adds a shadow for a polished look */
+    width: 150px;
+    border: 5px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .content h1 {
-    font-size: 4em;
-    font-weight: bold;
-    padding-bottom: 0.1em;
+    font-size: 5em;
+    font-family: "Birthstone", cursive;
+    margin: 0.2em 0;
+    line-height: 1.2;
+}
+
+.content h3 {
+    font-size: 1em;
+    font-style: italic;
+    margin-bottom: 1em;
 }
 
 .content h2 {
     font-size: 2em;
-    font-weight: bold;
-    padding-bottom: 0.5em;
-
+    margin-bottom: 1.5em;
 }
 
-.content h3 {
-    font-style: italic;
-    padding-bottom: 1.5em;
-
+.languages {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1em;
 }
 
-.content p {
-    font-size: 1em;
+.languages li {
+    font-size: 1.25em;
 }
+
+/* Projects Section */
+.projects {
+    background-color: white;
+    color: #8e4585;
+    padding: 3em 2em;
+    text-align: center;
+}
+
+.projects h2 {
+    font-size: 2.5em;
+    margin-bottom: 1em;
+}
+
+.project-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2em;
+}
+
+.project {
+    background-color: #f9f9f9;
+    padding: 1.5em;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.project + .project {
+    border-top: 1px solid #ddd;
+}
+
+/* Footer */
+footer {
+    background-color: #8e4585;
+    color: white;
+    text-align: center;
+    padding: 1em 0;
+}
+
+footer .socials {
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+}
+
+footer .socials a {
+    color: white;
+    font-size: 1.5em;
+    text-decoration: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* Navigation bar styling */
 .navigation_bar {
@@ -111,11 +212,6 @@ body {
 
 .navigation_bar nav ul li a:hover {
     color: rgb(80, 39, 75);
-}
-
-/* Main body styling - index page */
-main {
-    padding-left: 4em;
 }
 
 /*

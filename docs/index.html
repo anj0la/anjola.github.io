@@ -1,54 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Anjola Aina</title>
-    <link rel="stylesheet" href="https://use.typekit.net/rbt2uea.css">
-    <link rel="stylesheet" href="css/reset.css"/> 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <!-- For Github and LinkedIn icon -->
-    <link rel="stylesheet" href="css/styles.css"/>
-    <script type="text/javascript" src="buttons.js"></script>   
+
+    <!-- Devicon for Coding Icons-->
+    <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+          
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Custom Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Birthstone&family=Carattere&family=Chicle&family=Great+Vibes&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 
-<!-- Navigation Bar -->
-<body class="body_index">
-    <header class="navigation_bar">
-        <nav>
-            <ul>
-                <li><a href="">Contact</a></li>
-                <li><a href="">Experience</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="projects.html">Projects</a></li>
-                <li><a href="">Home</a></li>
-            </ul>        
-        </nav>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="">Projects</a></li>
+            <li><a href="">About</a></li>
+            <li><a href="">Experience</a></li>
+            <li><a href="">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Splash Page -->
+    <div class="background"></div>
+    <div class="overlay"></div>
+    <header class="content">
+        <img src="resources/profile_image_cropped.jpg" alt="Profile Image">
+        <h1>Anjola Aina</h1>
+        <h3>"Unleashing Imagination, One Byte at a Time."</h3>
+        <h2>Software Developer / Data Scientist</h2>
+        <ul class="languages">
+            <li><i class="devicon-python-plain"></i> Python</li>
+            <li><i class="devicon-cplusplus-plain"></i> C++</li>
+            <li><i class="devicon-c-plain"></i> C</li>
+            <li><i class="devicon-java-plain"></i> Java</li>
+            <li><i class="devicon-lua-plain"></i> Lua</li>
+            <li><i class="devicon-javascript-plain"></i> JavaScript</li>
+            <li><i class="devicon-godot-plain"></i> GDScript</li>
+            <li><i class="devicon-swift-plain"></i> Swift</li>
+        </ul>
     </header>
 
-    <!-- Main Page Information -->
-    <main class="index_page">
-
-        <!-- Image, name, job profile and catchphrase-->
-
-        <div class="background"></div>
-        <div class="overlay"></div>
-        <div class="content">
-            <img src="resources/profile_image_cropped.jpg" alt="Profile Image">
-            <h1>Anjola Aina</h1>
-            <h3>Unleashing Imagination, One Byte at a Time.</h3>
-            <h2>Software Developer / Data Scientist</h2>
-            <ul class="languages">
-                <li>Python</li>
-                <li>C++</li>
-                <li>C</li>
-                <li>Java</li>
-                <li>Lua</li>
-                <li>JavaScript</li>
-                <li>GDScript</li>
-                <li>Swift</li>
-            </ul>
-        </div>
-        
+    <!-- Recent Projects -->
+    <main>
+        <section class="projects">
+            <h2>Recent Projects</h2>
+            <div class="project-list">
+                <div class="project">
+                    <h3>Project 1</h3>
+                    <p>Description of Project 1</p>
+                </div>
+                <div class="project">
+                    <h3>Project 2</h3>
+                    <p>Description of Project 2</p>
+                </div>
+                <div class="project">
+                    <h3>Project 3</h3>
+                    <p>Description of Project 3</p>
+                </div>
+                <div class="project">
+                    <h3>Project 4</h3>
+                    <p>Description of Project 4</p>
+                </div>
+            </div>
+        </section>
     </main>
 
+    <!-- Footer -->
+    <footer>
+        <p>Connect with me:</p>
+        <div class="socials">
+            <a href="https://github.com/anj0la" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="https://linkedin.com/in/anjola-aina" target="_blank"><i class="fab fa-linkedin"></i></a>
+        </div>
+    </footer>
 </body>
 </html>

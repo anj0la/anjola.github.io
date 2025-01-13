@@ -1,0 +1,80 @@
+/* Background styling */
+
+body {
+    font-family: 'Source Code Pro', 'Courier New', Courier, monospace, sans-serif;
+    font-weight: 500;
+    color: #E7E5EA;
+    background-color: #353142;
+}
+
+/* Basic hovering styling */
+
+a {
+    text-decoration: none;
+    color: #E7E5EA;
+}
+
+a:link {
+    color: #E7E5EA;
+}
+
+a:visited {
+    color: #E7E5EA;
+}
+
+a:hover {
+    color: #723655;
+}
+
+/* Topmost navigation bar styling */
+
+.topmost_nav_bar {
+    background-color: #292631;
+}
+
+.topmost_nav_bar ul li img {
+    width: 20px;
+    height: 20px;
+}
+
+.topmost_nav_bar ul li {
+    display: inline;
+    /*padding-left: 0.5em;
+    font-size: 1.25em;
+    font-weight: bold;
+    margin-left: 1em;*/
+}
+
+.topmost_nav_bar ul li a:hover {
+    background-color: #723655;
+    border-radius: 0.5em;
+    color: #E7E5EA;
+    padding: 0.1em;
+    /*padding-left: 0.25em;
+    padding-right: 0.25em;*/
+
+}
+
+/* Top navigation bar styling */
+
+.top_nav_bar {
+    background-color: #292631;
+}
+
+.top_nav_bar ul li {
+    display: inline;
+    /*padding-left: 0.5em;
+    font-size: 1.25em;
+    font-weight: bold;
+    margin-left: 1em;*/
+}
+
+.top_nav_bar ul li a:hover {
+    background-color: #723655;
+    border-radius: 0.5em;
+    color: #E7E5EA;
+    padding: 0.1em;
+    /*padding-left: 0.25em;
+    padding-right: 0.25em;*/
+
+}

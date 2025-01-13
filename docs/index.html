@@ -3,15 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anjola Aina</title>
+    <title>Home</title>
 
     <!-- Devicon for Coding Icons-->
     <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
           
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Custom Styles -->
-    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Custom CSS Files -->
+    <link rel="stylesheet" href="assets/css/reset.css"/> 
+    <link rel="stylesheet" href="assets/css/main_style.css"/>
 
     <!-- Custom Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,9 +30,10 @@
     <header>
 
         <!-- Topmost Navigation Bar -->
-        <nav>
+        <nav class="topmost_nav_bar">
             <ul>
-                <li><a href=".html">File</a></li>
+                <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg"/></li>
+                <li><a href="">File</a></li>
                 <li><a href="">Edit</a></li>
                 <li><a href="">View</a></li>
                 <li><a href="">Go</a></li>
@@ -36,7 +42,7 @@
         </nav>
 
         <!-- Side Navigation Bar -->
-        <nav>
+        <nav class="side_nav_bar">
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="">Projects</a></li>
@@ -48,7 +54,7 @@
         </nav>
 
         <!-- Top Navigation Bar -->
-        <nav>
+        <nav class="top_nav_bar">
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="">Projects</a></li>
@@ -78,32 +84,41 @@
             <h2>Relevant Projects</h2>
 
             <!-- Penguin2D -->
+            <img src="https://placehold.co/300x150" alt="Placeholder">
             <h3>Penguin2D</h3>
-            <p>Penguin2D is a game framework built with C++ and SDL for creating fun and adorable 2D games. It prioritizes safety by using modern C++ practices to wrap SDL code, ensuring automatic object deletion and efficient memory management.
+            <p>Game Development </p>
+            <p>Penguin2D is a lightweight and modern game framework built with C++ and SDL3, designed to help developers create simple and fun 2D games. 
             </p>
-            <p><a href="https://github.com/anj0la/penguin-2d"></a>GitHub</p>
             <p>C++, SDL3, Cmake, Visual Studio</p>
+            <a href="https://github.com/anj0la/penguin-2d">GitHub</a>
 
             <!-- EstateEase -->
+            <img src="https://placehold.co/300x150" alt="Placeholder">
             <h3>Estate Ease</h3>
-            <p>A property management application that tracks the rent, expenses and payment of each client's property, along with the commission earned for each property being managed.
+            <p>Software Development </p>
+            <p>EstateEase is a property management application for tracking properties, rent, maintenance, and tenant status. 
             </p>
-            <p><a href="https://github.com/anj0la/estateease"></a>GitHub</p>
             <p>C#, SQLite, CSS3, XML, Visual Studio</p>
+            <a href="https://github.com/anj0la/estateease">GitHub</a>
             
             <!-- MovieSentiments -->
+            <img src="https://placehold.co/300x150" alt="Placeholder">
             <h3>MovieSentiments</h3>
+            <p>Data Science </p>
             <p>MovieSentiments is a project designed to analyze IMDB movie reviews using a custom-built Logistic Regression model.
             </p>
-            <p><a href="https://github.com/anj0la/MovieSentiments"></a>GitHub</p>
             <p>Python, Streamlit, Numpy, Pandas, Sci-kit Learn</p>
+            <a href="https://github.com/anj0la/MovieSentiments">GitHub</a>
+            <a href="https://moviesentiments.streamlit.app/">Live Demo</a>
 
             <!-- Needleman-Wunsch -->
+            <img src="https://placehold.co/300x150" alt="Placeholder">
             <h3>Parallel Needleman-Wunsch</h3>
+            <p>Algorithm Design </p>
             <p>The Needleman-Wunsch algorithm is a pairwise DNA global sequence alignment algorithm used to obtain the optimal alignment between two sequences.
             </p>
-            <p><a href="https://github.com/anj0la/nw_source_code"></a>GitHub</p>
             <p>C, Linux, VSCode, OpenMP</p>
+            <a href="https://github.com/anj0la/nw_source_code">GitHub</a>
 
         </section>
     </main>
@@ -112,12 +127,12 @@
     <footer>
 
         <!-- Leftmost Side -->
-        <p>github branch image</p>
+        <i class="fas fa-code-branch"></i>
         <p>master</p>
-        <p>upload cloud icon</p>
-        <p>close x icon</p>
+        <i class="bi bi-cloud-upload"></i>
+        <i class="bi bi-x-circle"></i>
         <p>0</p> 
-        <p>warning icon</p>
+        <i class="bi bi-exclamation-triangle"></i>
         <p>0</p>
         <p>port icon</p>
         <p>0</p>
@@ -126,11 +141,16 @@
         <p>UTF-8</p>
         <p>CRLF</p>
         <p>HTML</p>
-        <p>Notification Bell</p> <!-- Connect to LinkedIn and GitHub-->
-        <p>LinkedIn</p>
-        <p>GitHub</p>
+        <i class="fa-regular fa-bell"></i> <!-- Connect to LinkedIn and GitHub-->
+       
+        <nav>
+            <ul>
+                <li><button type="button"><i class="fa-brands fa-linkedin"></i></button></li>
+                <li><button type="button"><i class="fa-brands fa-github"></i></button></li>
+            </ul>
+        </nav>
 
     </footer>
-    
+
 </body>
 </html>

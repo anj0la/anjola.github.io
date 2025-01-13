@@ -11,15 +11,15 @@ body {
 
 a {
     text-decoration: none;
-    color: #E7E5EA;
+    color: #817E89;
 }
 
 a:link {
-    color: #E7E5EA;
+    color: #817E89;
 }
 
 a:visited {
-    color: #E7E5EA;
+    color: #817E89;
 }
 
 a:hover {
@@ -30,30 +30,45 @@ a:hover {
 
 .topmost_nav_bar {
     background-color: #292631;
+    color: #817E89;
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+    padding: 0.5em; /* Adjusted for consistent spacing */
 }
 
-.topmost_nav_bar ul li img {
-    width: 20px;
-    height: 20px;
+.topmost_nav_bar ul {
+    display: flex;
+    list-style: none; /* Remove bullet points */
+    margin: 0;
+    padding: 0;
+    gap: 1em; /* Space between items */
 }
 
 .topmost_nav_bar ul li {
-    display: inline;
-    /*padding-left: 0.5em;
-    font-size: 1.25em;
-    font-weight: bold;
-    margin-left: 1em;*/
+    display: flex;
+    align-items: center; /* Ensures icon and text are vertically aligned */
+    gap: 0.5em; /* Space between the icon and text */
+}
+
+.topmost_nav_bar ul li img {
+    width: 1.2em;
+    height: 1.05em;
+}
+
+.topmost_nav_bar ul li a {
+    color: #817E89;
+    text-decoration: none;
+    line-height: 1.2em; /* Ensures vertical alignment of text */
 }
 
 .topmost_nav_bar ul li a:hover {
     background-color: #723655;
     border-radius: 0.5em;
     color: #E7E5EA;
-    padding: 0.1em;
-    /*padding-left: 0.25em;
-    padding-right: 0.25em;*/
-
+    padding: 0.1em 0.25em;
 }
+
 
 /* Top navigation bar styling */
 

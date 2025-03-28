@@ -8,6 +8,8 @@ body {
     background-color: #FAF9ED;
     color: #572D0E;
     font-family: 'Roboto', Arial, Helvetica, sans-serif;
+    padding-left: 12rem;
+    padding-right: 12rem;
 }
 
 /* === Headers === */
@@ -36,6 +38,7 @@ nav {
     justify-content: space-between; /* Pushes h4 left and nav items right */
     align-items: center; /* Aligns items vertically */
     padding: 10px 20px;
+    background-color:#faf9edec;
 }
 
 nav ul {
@@ -115,12 +118,63 @@ footer ul li a:hover {
     color: #572D0E;
 }
 
-/* === Cards === */
-
 /* === Index === */
+
+/* Make the first section a two-column grid */
+section:first-of-type {
+    display: grid;
+    grid-template-columns: 2fr 1fr; /* Left content takes 2 parts, image takes 1 */
+    align-items: center; /* Aligns elements vertically */
+    gap: 20px;
+}
+
+/* Ensure the text content stays in the left column */
+.intro-text {
+    grid-column: 1; /* Keeps it on the left */
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    gap: 20px; /* Adjust the spacing between items */
+}
+
+.intro-text h3 {
+    background-color:#e6d2c679;
+    border-radius: 10px;
+    width: 30%;
+    padding: 0.5em;
+
+}
+
+.intro-text p {
+    font-size: 1.4em;
+    word-spacing: 2px;
+    color: #A89F99;
+    line-height: 1.25; /* Adjust value for more or less space between lines */
+}
+
+.intro-text button {
+    background-color:#572D0E;
+    border-radius: 10px;
+    width: 25%;
+    padding: 0.5em;
+    color: white;
+    font-weight: bold;
+    font-size: 1em;
+}
+
+/* Ensure the image stays in the right column */
+aside {
+    grid-column: 2;
+}
+
+/* Keep all other sections in a single column */
+section:not(:first-of-type) {
+    display: block;
+}
 
 /* === Projects === */
 
 /* === About === */
 
 /* === Contact === */
+
+/* === Cards === */

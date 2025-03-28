@@ -1,0 +1,126 @@
+/* === Global Styles === */
+
+html {
+    font-size: 16px;
+}
+
+body {
+    background-color: #FAF9ED;
+    color: #572D0E;
+    font-family: 'Roboto', Arial, Helvetica, sans-serif;
+}
+
+/* === Headers === */
+
+h1 { 
+    font-family: 'Playfair Display', Georgia, 'Times New Roman', Times, serif;
+    font-size: 4rem;
+    font-weight: bold;
+}
+
+h2 {
+    font-family: 'Playfair Display', Georgia, 'Times New Roman', Times, serif;
+    font-size: 2rem;
+    font-weight: bold; 
+}
+
+h4 { /* Small Fonts */
+    font-family: 'Caveat', cursive;
+    font-size: 1.5rem;
+}
+
+/* === Navigation === */
+
+nav {
+    display: flex;
+    justify-content: space-between; /* Pushes h4 left and nav items right */
+    align-items: center; /* Aligns items vertically */
+    padding: 10px 20px;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-left: 20px; /* Adds spacing between items */
+}
+
+nav h4 {
+    margin: 0; /* Removes default margin */
+    font-size: 1.5rem;
+}
+
+nav ul li a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #A89F99;
+    position: relative; /* Needed for the underline effect */
+    padding-bottom: 5px; /* Space between text and line */
+}
+
+nav ul li a:visited {
+    color: #572D0E;
+}
+
+nav ul li a::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 2px; /* Line thickness */
+    background-color: #A89F99; /* Line color */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transform: scaleX(0); /* Hides line initially */
+    transition: transform 0.2s ease-in-out; /* Smooth effect */
+}
+
+nav ul li a:hover::after {
+    transform: scaleX(1); /* Expands line on hover */
+}
+
+/* === Footer === */
+
+footer {
+    display: flex;
+    justify-content: space-between; /* Trademark on left, links on right */
+    align-items: center;
+    padding: 10px 20px;
+    color: #A89F99;
+}
+
+footer ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex; /* Aligns list items horizontally */
+}
+
+footer ul li {
+    margin-left: 15px; /* Add spacing between GitHub & LinkedIn */
+}
+
+footer ul li a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #A89F99;
+    transition: color 0.3s ease;
+}
+
+footer ul li a:hover {
+    color: #572D0E;
+}
+
+/* === Cards === */
+
+/* === Index === */
+
+/* === Projects === */
+
+/* === About === */
+
+/* === Contact === */

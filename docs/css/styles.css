@@ -34,6 +34,7 @@ button {
     font-size: 1.25rem;
 }
 
+
 /* === Navigation === */
 
 nav {
@@ -109,6 +110,8 @@ footer {
     align-items: center;
     padding: 10px 20px;
     color: #a9a9a9;
+    padding-left: 12rem;
+    padding-right: 12rem;
 }
 
 footer p a {
@@ -149,7 +152,7 @@ footer ul li a:hover {
 /* === Index === */
 
 /* Top Section: Intro and Interactive Elements */
-.top_section {
+.top-section {
     display: grid;
     grid-template-columns: 2fr 1fr; /* Left content takes 2 parts, image takes 1 */
     align-items: center; /* Aligns elements vertically */
@@ -194,7 +197,7 @@ footer ul li a:hover {
 }
 
 /* Ensure the image stays in the right column */
-aside {
+.top-section aside {
     grid-column: 2;
     padding-right: 24rem;
 }
@@ -358,11 +361,130 @@ aside {
     background-color:rgb(40, 40, 40);
 }
 
-
 /* === Projects === */
+
+.relevant-project {
+    background-color: #f0f0f0;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+}
+
+.relevant-project h2 {
+    padding-left: 12rem;
+    padding-bottom: 0.5em;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 2fr 2fr; /* Left content takes 2 parts, image takes 1 */
+    align-items: center; /* Aligns elements vertically */    
+}
+
+.project {
+    padding-left: 12rem;
+    padding-bottom: 0em;
+}
+
+.project:nth-of-type(2n) {
+    padding-left: 0rem;
+    margin-top: 2em;
+}
 
 /* === About === */
 
+.about-me {
+    background-color: #f0f0f0;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.about-me h2 {
+    padding-left: 12rem;
+    padding-bottom: 1em;
+}
+
+.about-me p {
+    grid-column: 1; /* Keeps it on the left */
+    font-size: 1.25em;
+    color: #848484;
+    line-height: 1.25; /* Adjust value for more or less space between lines */
+    text-align: left;
+    padding-left: 12rem;
+    padding-right: 12rem;
+    padding-bottom: 1em;
+}
+
+.work-experience {
+    background-color: white; 
+}
+
+.work-experience h2 {
+    padding-left: 12rem;
+    padding-bottom: 1em;
+    padding-top: 1em;
+}
+
+.work-experience article {
+    padding-left: 12rem;
+    padding-bottom: 1em;
+}
+
+.skills-section h2 {
+    padding-top: 0em;
+}
+
+.skills-section ul {
+    padding-left: 12rem;
+    padding-bottom: 2em;
+}
+
 /* === Contact === */
 
-/* === Cards === */
+.grid-contacts {
+    background-color: #f0f0f0;
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Left content takes 2 parts, image takes 1 */
+    align-items: center; /* Aligns elements vertically */    
+}
+
+.info-section {
+    padding-left: 12rem;
+}
+
+.form-section {
+    padding-top: 2em;
+    padding-bottom: 2em;
+}
+
+textarea {
+    resize: none;
+}
+
+form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    max-width: 600px; /* optional: controls total width */
+}
+  
+  /* Make the textarea and button span across both columns */
+textarea,
+  input[type="submit"] {
+    grid-column: span 2;
+}
+
+.submit-button {
+    background-color: #000000;
+    border-radius: 10px;
+    padding: 0.5em;
+    font-size: 1.25em;
+    font-family: 'Caveat', cursive;
+    color: white;
+    font-weight: bold;
+    margin-bottom: 1em;
+}
+
+
+.submit-button:hover {
+    background-color:rgb(40, 40, 40);
+}

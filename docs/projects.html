@@ -28,92 +28,160 @@
 
         <!-- Left side of the page -->
 
-        <section>
+        <section class="top-section">
+            
+            <div class="intro-text"> <!-- Add a wrapper for left content -->
+                <h3>Welcome to my cozy projects corner!</h3>
+                <h1>Selected Projects</h1>
+                <p>Take a look at some of the projects that I've worked on!</p>
+            </div>
 
-            <h3>Welcome to my cozy projects corner!</h3>
-            <h1>Selected Projects</h1>
-            <p>Take a look at all the projects that I've worked on on and am proud of! They combine my passion for design and programming.</p>
+            <!-- Right side of the page -->
+            <aside>
+                <img src="resources/cat_sitting.gif">
+            </aside>
 
         </section>
-
-        <!-- Right side of the page -->
-
-        <aside>
-            <img src="https://placehold.co/600x400">
-        </aside>
-
          <!-- Recent projects -->
 
-        <section>
+        <section class="relevant-project">
 
             <h2>Relevant Projects</h2>
-            <!-- CLICK ON THE PROJECT CARD TO SEE THE WEBSITE PAGE FOR THAT PROJECT -->
 
-            <article>
-                <p>Python, zstandard, argparse</p>
-                <h3>Filtering Pushshift Data</h3>
-                <p>A script allowing one to filter Reddit comments from decompressed zst Pushshift data files.</p>
-            </article>
+            <div class="grid">
+                <article class="project">
+                    <h3 class="card-header">Website Portfolio</h3>
+                    <ul class="card-subheader">
+                        <li>HTML5</li>
+                        <li>CSS</li>
+                        <li>JavaScript</li>
+                    </ul>
+                    <p class="card-desc">A minimalist website portfolio.</p>
+                    <button class="card-button">Explore project ></button>
+                </article>
+    
+                <article class="project">
+                    <h3 class="card-header">Filtering Pushshift Data</h3>
+                    <ul class="card-subheader">
+                        <li>Python</li>
+                        <li>zstandard</li>
+                        <li>argparse</li>
+                    </ul>
+                    <p class="card-desc">A script allowing one to filter Reddit comments from decompressed zst Pushshift data files.</p>
+                    <button class="card-button">Explore project ></button>
+                </article>
+    
+                <article class="project">
+                    <h3 class="card-header">Penguin Framework</h3>
+                    <ul class="card-subheader">
+                        <li>C++</li>
+                        <li>SDL</li>
+                        <li>CMake</li>
+                    </ul>
+                    <p class="card-desc">A game framework built with C++ and SDL for creating fun and adorable 2D games.</p>
+                    <button class="card-button">Explore project ></button>
+                </article>
+    
+                <article class="project">
+                    <h3 class="card-header">Baking Frenzy</h3>
+                    <ul class="card-subheader">
+                        <li>Godot</li>
+                        <li>GDScript</li>
+                        <li>Paint.net</li>
+                    </ul>
+                    <p class="card-desc">A single-player action game where players manage a bustling bakery, racing to gather ingredients, bake, and serve as many treats as possible before closing time.</p>
+                    <button class="card-button">Explore project ></button>
+                </article>
+    
+                <article class="project">
+                    <h3 class="card-header">MovieSentiments</h3>
+                    <ul class="card-subheader">
+                        <li>Python</li>
+                        <li>Streamlit</li>
+                        <li>NumPy</li>
+                    </ul>
+                    <p class="card-desc">A project designed to analyze IMDB movie reviews using a custom-built Logistic Regression model.</p>
+                    <button class="card-button">Explore project ></button>
+                </article>
+    
+                <article class="project">
+                    <h3 class="card-header">FitSentiment</h3>
+                    <ul class="card-subheader">
+                        <li>Python</li>
+                        <li>PyTorch</li>
+                        <li>Pandas</li>
+                    </ul>
+                    <p class="card-desc">A sentiment analysis tool designed to analyze discussions about calorie counting apps.</p>
+                    <button class="card-button">Explore project ></button>
+                </article>
+    
+                <article class="project">
+                    <h3 class="card-header">FitFolio</h3>
+                    <ul class="card-subheader">
+                        <li>Swift</li>
+                        <li>SwiftUI</li>
+                        <li>Figma</li>
+                    </ul>
+                    <p class="card-desc">A simple Swift-based mockup app designed to explore calorie counting functionality while learning iOS development.</p>
+                    <button class="card-button">Explore project ></button>
+                </article>
+    
+                <article class="project">
+                    <h3 class="card-header">Parallel Needleman-Wunsch</h3>
+                    <ul class="card-subheader">
+                        <li>C</li>
+                        <li>OpenMP</li>
+                        <li>Linux</li>
+                    </ul>
+                    <p class="card-desc">A parallel implementation of the Needleman-Wunsch algorithm, a pairwise DNA global sequence alignment algorithm used to obtain the optimal alignment between two sequences.</p>
+                    <button class="card-button">Explore project ></button>
+                </article>
+    
+                <article class="project">
+                    <h3 class="card-header">Multithreaded Snake</h3>
+                    <ul class="card-subheader">
+                        <li>C/C++</li>
+                        <li>Allegro 4.4.2</li>
+                        <li>Pthreads</li>
+                    </ul>
+                    <p class="card-desc">A multithreaded implementation of the classic Snake game.</p>
+                    <button class="card-button">Explore project ></button>
+                </article>
+    
+                <article class="project">
+                    <h3 class="card-header">Ocean Cleaning Frenzy</h3>
+                    <ul class="card-subheader">
+                        <li>C/C++</li>
+                        <li>Allegro 4.4.2</li>
+                        <li>Photoshop</li>
+                    </ul>
+                    <p class="card-desc">An action game where players must clean up as much trash thrown from the top of the ocean before the timer runs out.</p>
+                    <button class="card-button">Explore project ></button>
+                </article>
+    
+                <article class="project">
+                    <h3 class="card-header">Candy Invaders</h3>
+                    <ul class="card-subheader">
+                        <li>C/C++</li>
+                        <li>Allegro 4.4.2</li>
+                        <li>Procreate</li>
+                    </ul>
+                    <p class="card-desc">A shoot-em-up style game where players control a candy ship and try to eliminate as many candy monsters as possible.</p>
+                    <button class="card-button">Explore project ></button>
+                </article>
+            
+                <article class="project">
+                    <h3 class="card-header">Property Management Application</h3>
+                    <ul class="card-subheader">
+                        <li>Java</li>
+                        <li>JavaFX</li>
+                        <li>SQLite</li>
+                    </ul>
+                    <p class="card-desc">A property management application that tracks the rent, expenses and payment of each client's property, along with the commission earned for each property being managed.</p>
+                    <button class="card-button">Explore project ></button>
+                </article>
 
-            <article>
-                <p>C++, SDL, GoogleTest</p>
-                <h3>Penguin Framework</h3>
-                <p>A game framework built with C++ and SDL for creating fun and adorable 2D games.</p>
-            </article>
-
-            <article>
-                <p>Godot, GDScript, Paint.net</p>
-                <h3>Baking Frenzy</h3>
-                <p>A single-player action game where players manage a bustling bakery, racing to gather ingredients, bake, and serve as many treats as possible before closing time.</p>
-            </article>
-
-            <article>
-                <p>Python, Streamlit, NumPy</p>
-                <h3>MovieSentiments</h3>
-                <p>A project designed to analyze IMDB movie reviews using a custom-built Logistic Regression model.</p>
-            </article>
-
-            <article>
-                <p>Python, PyTorch, NumPy</p>
-                <h3>FitSentiment</h3>
-                <p>A sentiment analysis tool designed to analyze discussions about calorie counting apps.</p>
-            </article>
-
-            <article>
-                <p>Swift, SwiftUI, Figma</p>
-                <h3>FitFolio</h3>
-                <p>A simple Swift-based mockup app designed to explore calorie counting functionality while learning iOS development.</p>
-            </article>
-
-            <article>
-                <p>C, OpenMP, Linux</p>
-                <h3>Parallel Needleman-Wunsch</h3>
-                <p>A parallel implementation of the Needleman-Wunsch algorithm, a pairwise DNA global sequence alignment algorithm used to obtain the optimal alignment between two sequences.</p>
-            </article>
-
-            <article>
-                <p>C/C++, Allegro 4.4.2, Pthreads</p>
-                <h3>Multithreaded Snake</h3>
-                <p>A multithreaded implementation of the classic Snake game.</p>
-            </article>
-
-            <article>
-                <p>C/C++, Allegro 4.4.2, Photoshop</p>
-                <h3>Ocean Cleaning Frenzy</h3>
-                <p>An action game where players must clean up as much trash thrown from the top of the ocean before the timer runs out.</p>
-            </article>
-
-            <article>
-                <p>C/C++, Allegro 4.4.2, Procreate</p>
-                <h3>Candy Invaders</h3>
-                <p>A shoot-em-up style game where players control a candy ship and try to eliminate as many candy monsters as possible.</p>
-            </article>
-        
-            <article>
-                <p>Java, JavaFX, SQLite</p>
-                <h3>Property Management Application</h3>
-                <p>A property management application that tracks the rent, expenses and payment of each client's property, along with the commission earned for each property being managed.</p>
-            </article>
+            </div>  
 
         </section>
         

@@ -273,22 +273,92 @@ aside {
     background-color:rgb(40, 40, 40);
 }
 
-.large-card {
-    background-color:white;
-    border-radius: 25px;
-    width: 40%;
-    margin-bottom: 2rem;
-    display: flex;
-    flex-direction: column; /* Keeps items stacked */
-    align-items: center; /* Centers them horizontally */
+.recent-projects {
+    display: grid;
+    align-items: center; /* Aligns elements vertically */
+    padding-top: 2rem;
+    padding-bottom: 4rem;
 }
 
-.large-card-image {
+.recent-projects h2 {
+    padding-left: 12rem;
+    padding-bottom: 1rem;
+}
+
+.recent-projects article {
+    padding-left: 12rem;
+}
+
+.card-subheader {
+    list-style: none;
+    margin-bottom: 1em;
+}
+
+.card-subheader li {
+    display: inline;
+    background-color:#b9b9b979;
+    border-radius: 15px;
+    width: 12%;
+    padding: 0.5em;
+    margin-left: 5px; /* Adds spacing between items */
+}
+
+.card-subheader li:first-of-type {
+    margin-left: 0px; 
+}
+
+.card-header {
+    font-family: 'Caveat', cursive;
+    font-size: 2rem;
+    margin-bottom: 0.5em;
+}
+
+.card-desc {
+    font-size: 1.25em;
+    color: #848484;
+    line-height: 1.25; /* Adjust value for more or less space between lines */
+    text-align: left;
+    padding-right: 20rem;
+    margin-bottom: 0.5em;
+}
+
+.card-button {
+    grid-column: 1; /* Keeps it on the left */
+    margin-right: 28rem;
+    background-color: #000000;
     border-radius: 10px;
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
-
+    padding: 0.5em;
+    font-size: 1.1em;
+    color: white;
+    font-weight: bold;
+    margin-bottom: 1em;
 }
+
+.recent-projects article:last-of-type button {
+    margin-bottom: 2em;
+}
+
+.card-button:hover {
+    background-color:rgb(40, 40, 40);
+}
+
+.view-button {
+    margin-left: 36rem;
+    margin-right: 36rem;
+    grid-column: 1; /* Keeps it on the left */
+    background-color: #000000;
+    border-radius: 10px;
+    padding: 0.5em;
+    font-size: 1.1em;
+    color: white;
+    font-weight: bold;
+}
+
+.view-button:hover {
+    background-color:rgb(40, 40, 40);
+}
+
+
 /* === Projects === */
 
 /* === About === */

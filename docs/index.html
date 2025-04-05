@@ -28,8 +28,7 @@
 
         <!-- Left side of the page -->
 
-
-        <section>
+        <section class="top_section">
             
             <div class="intro-text"> <!-- Add a wrapper for left content -->
                 <h3>Welcome to my cozy corner!</h3>
@@ -39,31 +38,40 @@
             </div>
 
             <!-- Right side of the page -->
-            <aside>
-                <img src="https://placehold.co/600x400">
+            <aside class="interactive_element">
+                <img src="resources/cat_boba.gif">
             </aside>
 
         </section>
-
         
 
         <!-- Featured Project -->
 
-        <section>
+        <section class="feature-project ">
 
-            <h3>Featured Work</h3>
-
-            <h2>Penguin Framework</h2>
+            <div class="feature-text">
+                <h3>Featured Work</h3>
             
-            <!-- More detailed description -->
-            <p>
-                Penguin Framework is a lightweight and modern game framework built with C++ and SDL3, 
-                designed to help developers create simple and fun 2D games. By wrapping SDL3's C functionality into modern C++ constructs, 
-                Penguin Framework ensures efficient memory management, enhanced safety, and developer-friendly APIs.
-            </p>
+                <ul>
+                    <li>C++</li>
+                    <li>SDL</li>
+                    <li>CMake</li>
+                </ul>
+        
+                <h2 class="feature-header">Penguin Framework</h2>
+                    
+                    <!-- More detailed description -->
+                <p class="feature-desc">
+                    Penguin Framework is a lightweight, modern game development framework built with C++20, SDL3, and CMake, designed to help developers easily create simple and fun 2D games without the need for an external editor.
+                </p>
+                <p class="feature-desc">
+                    Aimed to be like MonoGame but for C++, Penguin Framework provides a flexible environment where developers can focus on creating their game logic while the framework handles low-level details like window management, input handling, and FPS control.                </p>
+                <button class="feature-button">Explore project ></button>
+            </div>
+        
 
-            <p>C++, SDL, GoogleTest</p>
-            <button>Explore project ></button>
+            <img class="feature-image" src="resources/logo_cropped.png">
+
 
         </section>
 
@@ -107,7 +115,7 @@
     </main>
 
     <footer>
-        <p>&copy; 2025 Anjola Aina. All rights reserved.</p>
+        <p>&copy; 2025 Anjola Aina. All rights reserved. GIFs from <a href="https://getstickerpack.com/stickers/mochi-cat-you.">Sticker maker for WhatsApp.</p>
         <ul>
             <li><a href="https://github.com/anj0la"><i class="devicon-github-original"></i></a></li>
             <li><a href="https://www.linkedin.com/in/anjola-aina/"><i class="devicon-linkedin-plain"></i></a></li>

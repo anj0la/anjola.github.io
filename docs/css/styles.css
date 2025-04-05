@@ -5,11 +5,9 @@ html {
 }
 
 body {
-    background-color: #FAF9ED;
-    color: #572D0E;
+    background-color: #ffffff;
+    color: #000000;
     font-family: 'Roboto', Arial, Helvetica, sans-serif;
-    padding-left: 12rem;
-    padding-right: 12rem;
 }
 
 /* === Headers === */
@@ -31,6 +29,11 @@ h4 { /* Small Fonts */
     font-size: 1.5rem;
 }
 
+button {
+    font-family: 'Caveat', cursive;
+    font-size: 1.25rem;
+}
+
 /* === Navigation === */
 
 nav {
@@ -38,12 +41,16 @@ nav {
     justify-content: space-between; /* Pushes h4 left and nav items right */
     align-items: center; /* Aligns items vertically */
     padding: 10px 20px;
-    background-color:#faf9edec;
+    background-color: #ffffff;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    width: 100%;
 }
 
 nav ul {
     list-style: none;
-    padding: 0;
+    padding-right: 13.5rem;
     margin: 0;
 }
 
@@ -55,26 +62,33 @@ nav ul li {
 nav h4 {
     margin: 0; /* Removes default margin */
     font-size: 1.5rem;
+    padding-left: 11rem;
+
 }
 
 nav ul li a {
     text-decoration: none;
     font-weight: bold;
-    color: #A89F99;
+    color: #a9a9a9;
     position: relative; /* Needed for the underline effect */
     padding-bottom: 5px; /* Space between text and line */
 }
 
 nav ul li a:visited {
-    color: #572D0E;
+    color: #000000;
 }
+
+nav ul li a:hover {
+    color: #656565;  
+}
+
 
 nav ul li a::after {
     content: "";
     display: block;
     width: 100%;
     height: 2px; /* Line thickness */
-    background-color: #A89F99; /* Line color */
+    background-color: #a9a9a9; /* Line color */
     position: absolute;
     bottom: 0;
     left: 0;
@@ -86,6 +100,7 @@ nav ul li a:hover::after {
     transform: scaleX(1); /* Expands line on hover */
 }
 
+
 /* === Footer === */
 
 footer {
@@ -93,7 +108,20 @@ footer {
     justify-content: space-between; /* Trademark on left, links on right */
     align-items: center;
     padding: 10px 20px;
-    color: #A89F99;
+    color: #a9a9a9;
+}
+
+footer p a {
+    text-decoration: none;
+    color: #a9a9a9;
+}
+
+footer p a:visited {
+    color: #a9a9a9;
+}
+
+footer p a:hover {
+    font-weight: bold;
 }
 
 footer ul {
@@ -110,67 +138,157 @@ footer ul li {
 footer ul li a {
     text-decoration: none;
     font-weight: bold;
-    color: #A89F99;
+    color: #a9a9a9;
     transition: color 0.3s ease;
 }
 
 footer ul li a:hover {
-    color: #572D0E;
+    color: #656565;
 }
 
 /* === Index === */
 
-/* Make the first section a two-column grid */
-section:first-of-type {
+/* Top Section: Intro and Interactive Elements */
+.top_section {
     display: grid;
     grid-template-columns: 2fr 1fr; /* Left content takes 2 parts, image takes 1 */
     align-items: center; /* Aligns elements vertically */
     gap: 20px;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
 }
+
 
 /* Ensure the text content stays in the left column */
 .intro-text {
     grid-column: 1; /* Keeps it on the left */
     display: flex;
     flex-direction: column; /* Stack items vertically */
-    gap: 20px; /* Adjust the spacing between items */
+    gap: 20px; /* Adjust the spacing between items */  
+    padding-left: 12rem;
 }
 
 .intro-text h3 {
-    background-color:#e6d2c679;
-    border-radius: 10px;
-    width: 30%;
-    padding: 0.5em;
-
+    font-family: 'Caveat', cursive;
+    font-size: 1.5rem;
 }
 
 .intro-text p {
     font-size: 1.4em;
     word-spacing: 2px;
-    color: #A89F99;
+    color: #a9a9a9;
     line-height: 1.25; /* Adjust value for more or less space between lines */
 }
 
 .intro-text button {
-    background-color:#572D0E;
+    background-color: #000000;
     border-radius: 10px;
-    width: 25%;
+    width: 30%;
     padding: 0.5em;
     color: white;
     font-weight: bold;
-    font-size: 1em;
+}
+
+.intro-text button:hover {
+    background-color:rgb(40, 40, 40);
 }
 
 /* Ensure the image stays in the right column */
 aside {
     grid-column: 2;
+    padding-right: 24rem;
 }
 
-/* Keep all other sections in a single column */
-section:not(:first-of-type) {
-    display: block;
+/* Featured Project */
+.feature-project {
+    background-color: #f0f0f0;
+    display: grid;
+    grid-template-columns: 2fr 1fr; /* Left content takes 2 parts, image takes 1 */
+    align-items: center; /* Aligns elements vertically */
+    padding-top: 4rem;
+    padding-bottom: 4rem;
 }
 
+.feature-text {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    gap: 20px; /* Adjust the spacing between items */  
+    padding-left: 12rem;
+}
+
+.feature-text h3 {
+    grid-column: 1; /* Keeps it on the left */
+    font-family: 'Caveat', cursive;
+    font-size: 1.2rem;
+}
+
+.feature-text ul {
+    list-style: none;
+    grid-column: 1; /* Keeps it on the left */
+}
+
+.feature-text ul li {
+    display: inline;
+    background-color:#b9b9b979;
+    border-radius: 15px;
+    width: 12%;
+    padding: 0.5em;
+    margin-left: 5px; /* Adds spacing between items */
+}
+
+.feature-text ul li:first-of-type {
+    margin-left: 0px;
+}
+
+.feature-header {
+    grid-column: 1; /* Keeps it on the left */
+}
+
+.feature-desc {
+    grid-column: 1; /* Keeps it on the left */
+    font-size: 1.25em;
+    color: #848484;
+    line-height: 1.25; /* Adjust value for more or less space between lines */
+    text-align: left;
+    padding-right: 10rem;
+}
+
+.feature-image {
+    margin-top: 0;
+    border-radius: 175px;
+    width: 60%;
+}
+
+.feature-button {
+    grid-column: 1; /* Keeps it on the left */
+    margin-right: 36rem;
+    background-color: #000000;
+    border-radius: 10px;
+    padding: 0.5em;
+    color: white;
+    font-weight: bold;
+}
+
+.feature-button:hover {
+    background-color:rgb(40, 40, 40);
+}
+
+.large-card {
+    background-color:white;
+    border-radius: 25px;
+    width: 40%;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column; /* Keeps items stacked */
+    align-items: center; /* Centers them horizontally */
+}
+
+.large-card-image {
+    border-radius: 10px;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+
+}
 /* === Projects === */
 
 /* === About === */

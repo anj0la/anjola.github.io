@@ -376,7 +376,6 @@ footer ul li a:hover {
 
 .grid {
     display: grid;
-    grid-template-columns: 2fr 2fr; /* Left content takes 2 parts, image takes 1 */
     align-items: center; /* Aligns elements vertically */    
 }
 
@@ -386,8 +385,7 @@ footer ul li a:hover {
 }
 
 .project:nth-of-type(2n) {
-    padding-left: 0rem;
-    margin-top: 2em;
+    margin-top: 0em;
 }
 
 /* === About === */

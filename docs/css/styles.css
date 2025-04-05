@@ -6,7 +6,7 @@ html {
 
 body {
     background-color: #ffffff;
-    color: #000000;
+    color: #562E18ff;
     font-family: 'Roboto', Arial, Helvetica, sans-serif;
 }
 
@@ -76,11 +76,11 @@ nav ul li a {
 }
 
 nav ul li a:visited {
-    color: #000000;
+    color: #562E18ff;
 }
 
 nav ul li a:hover {
-    color: #656565;  
+    color:rgba(86, 46, 24, 0.24);  
 }
 
 
@@ -89,7 +89,7 @@ nav ul li a::after {
     display: block;
     width: 100%;
     height: 2px; /* Line thickness */
-    background-color: #a9a9a9; /* Line color */
+    background-color:rgba(86, 46, 24, 0.24); /* Line color */
     position: absolute;
     bottom: 0;
     left: 0;
@@ -109,18 +109,18 @@ footer {
     justify-content: space-between; /* Trademark on left, links on right */
     align-items: center;
     padding: 10px 20px;
-    color: #a9a9a9;
+    color:rgb(154, 142, 136);
     padding-left: 12rem;
     padding-right: 12rem;
 }
 
 footer p a {
     text-decoration: none;
-    color: #a9a9a9;
+    color:rgb(154, 142, 136);
 }
 
 footer p a:visited {
-    color: #a9a9a9;
+    color:rgb(154, 142, 136);
 }
 
 footer p a:hover {
@@ -141,12 +141,12 @@ footer ul li {
 footer ul li a {
     text-decoration: none;
     font-weight: bold;
-    color: #a9a9a9;
+    color:rgb(154, 142, 136);
     transition: color 0.3s ease;
 }
 
 footer ul li a:hover {
-    color: #656565;
+    color:rgb(154, 142, 136);
 }
 
 /* === Index === */
@@ -179,12 +179,13 @@ footer ul li a:hover {
 .intro-text p {
     font-size: 1.4em;
     word-spacing: 2px;
-    color: #a9a9a9;
+    color:rgb(202, 187, 180);
     line-height: 1.25; /* Adjust value for more or less space between lines */
 }
 
 .intro-text button {
-    background-color: #000000;
+    background-color: #562E18ff;
+    border-color: rgba(86, 46, 24);
     border-radius: 10px;
     width: 30%;
     padding: 0.5em;
@@ -193,7 +194,8 @@ footer ul li a:hover {
 }
 
 .intro-text button:hover {
-    background-color:rgb(40, 40, 40);
+    background-color:rgba(86, 46, 24, 0.75);
+    border-color: rgba(86, 46, 24, 0.75);
 }
 
 /* Ensure the image stays in the right column */
@@ -204,7 +206,7 @@ footer ul li a:hover {
 
 /* Featured Project */
 .feature-project {
-    background-color: #f0f0f0;
+    background-color:rgba(249, 225, 215, 0.84);
     display: grid;
     grid-template-columns: 2fr 1fr; /* Left content takes 2 parts, image takes 1 */
     align-items: center; /* Aligns elements vertically */
@@ -250,7 +252,7 @@ footer ul li a:hover {
 .feature-desc {
     grid-column: 1; /* Keeps it on the left */
     font-size: 1.25em;
-    color: #848484;
+    color:rgb(154, 142, 136);
     line-height: 1.25; /* Adjust value for more or less space between lines */
     text-align: left;
     padding-right: 10rem;
@@ -265,7 +267,7 @@ footer ul li a:hover {
 .feature-button {
     grid-column: 1; /* Keeps it on the left */
     margin-right: 36rem;
-    background-color: #000000;
+    background-color: #562E18ff;
     border-radius: 10px;
     padding: 0.5em;
     color: white;
@@ -273,7 +275,8 @@ footer ul li a:hover {
 }
 
 .feature-button:hover {
-    background-color:rgb(40, 40, 40);
+    background-color:rgba(86, 46, 24, 0.75);
+    border-color: rgba(86, 46, 24, 0.75);
 }
 
 .recent-projects {
@@ -299,7 +302,7 @@ footer ul li a:hover {
 
 .card-subheader li {
     display: inline;
-    background-color:#b9b9b979;
+    background-color: #b9b9b979;
     border-radius: 15px;
     width: 12%;
     padding: 0.5em;
@@ -318,7 +321,7 @@ footer ul li a:hover {
 
 .card-desc {
     font-size: 1.25em;
-    color: #848484;
+    color:rgb(154, 142, 136);
     line-height: 1.25; /* Adjust value for more or less space between lines */
     text-align: left;
     padding-right: 20rem;
@@ -328,7 +331,7 @@ footer ul li a:hover {
 .card-button {
     grid-column: 1; /* Keeps it on the left */
     margin-right: 28rem;
-    background-color: #000000;
+    background-color: #562E18ff;
     border-radius: 10px;
     padding: 0.5em;
     font-size: 1.1em;
@@ -342,14 +345,15 @@ footer ul li a:hover {
 }
 
 .card-button:hover {
-    background-color:rgb(40, 40, 40);
+    background-color:rgba(86, 46, 24, 0.75);
+    border-color: rgba(86, 46, 24, 0.75);
 }
 
 .view-button {
     margin-left: 36rem;
     margin-right: 36rem;
     grid-column: 1; /* Keeps it on the left */
-    background-color: #000000;
+    background-color: #562E18ff;
     border-radius: 10px;
     padding: 0.5em;
     font-size: 1.1em;
@@ -358,13 +362,14 @@ footer ul li a:hover {
 }
 
 .view-button:hover {
-    background-color:rgb(40, 40, 40);
+    background-color:rgba(86, 46, 24, 0.75);
+    border-color: rgba(86, 46, 24, 0.75);
 }
 
 /* === Projects === */
 
 .relevant-project {
-    background-color: #f0f0f0;
+    background-color:rgba(249, 225, 215, 0.84);
     padding-top: 4rem;
     padding-bottom: 4rem;
 }
@@ -391,7 +396,7 @@ footer ul li a:hover {
 /* === About === */
 
 .about-me {
-    background-color: #f0f0f0;
+    background-color:rgba(249, 225, 215, 0.84);
     padding-top: 2rem;
     padding-bottom: 2rem;
 }
@@ -404,7 +409,7 @@ footer ul li a:hover {
 .about-me p {
     grid-column: 1; /* Keeps it on the left */
     font-size: 1.25em;
-    color: #848484;
+    color:rgb(154, 142, 136);
     line-height: 1.25; /* Adjust value for more or less space between lines */
     text-align: left;
     padding-left: 12rem;
@@ -434,55 +439,4 @@ footer ul li a:hover {
 .skills-section ul {
     padding-left: 12rem;
     padding-bottom: 2em;
-}
-
-/* === Contact === */
-
-.grid-contacts {
-    background-color: #f0f0f0;
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* Left content takes 2 parts, image takes 1 */
-    align-items: center; /* Aligns elements vertically */    
-}
-
-.info-section {
-    padding-left: 12rem;
-}
-
-.form-section {
-    padding-top: 2em;
-    padding-bottom: 2em;
-}
-
-textarea {
-    resize: none;
-}
-
-form {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    max-width: 600px; /* optional: controls total width */
-}
-  
-  /* Make the textarea and button span across both columns */
-textarea,
-  input[type="submit"] {
-    grid-column: span 2;
-}
-
-.submit-button {
-    background-color: #000000;
-    border-radius: 10px;
-    padding: 0.5em;
-    font-size: 1.25em;
-    font-family: 'Caveat', cursive;
-    color: white;
-    font-weight: bold;
-    margin-bottom: 1em;
-}
-
-
-.submit-button:hover {
-    background-color:rgb(40, 40, 40);
 }

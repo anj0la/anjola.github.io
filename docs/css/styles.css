@@ -1,216 +1,442 @@
-/* General styling */
+/* === Global Styles === */
+
+html {
+    font-size: 16px;
+}
+
 body {
-    font-family: "lores-12", sans-serif;
-    color: white;
-    background-image: url("../resources/background-image.png");
-    background-size: cover;
+    background-color: #ffffff;
+    color: #562E18ff;
+    font-family: 'Roboto', Arial, Helvetica, sans-serif;
 }
 
-/* Navigation bar styling */
-.navigation_bar {
-    padding-top: 2em;
-    padding-left: 2.4em;
-    padding-bottom: 2em;
-}
+/* === Headers === */
 
-.navigation_bar li span {
-    font-size: 1.5em;
+h1 { 
+    font-family: 'Playfair Display', Georgia, 'Times New Roman', Times, serif;
+    font-size: 4rem;
     font-weight: bold;
 }
 
-.navigation_bar nav ul li {
+h2 {
+    font-family: 'Playfair Display', Georgia, 'Times New Roman', Times, serif;
+    font-size: 2rem;
+    font-weight: bold; 
+}
+
+h4 { /* Small Fonts */
+    font-family: 'Caveat', cursive;
+    font-size: 1.5rem;
+}
+
+button {
+    font-family: 'Caveat', cursive;
+    font-size: 1.25rem;
+}
+
+
+/* === Navigation === */
+
+nav {
+    display: flex;
+    justify-content: space-between; /* Pushes h4 left and nav items right */
+    align-items: center; /* Aligns items vertically */
+    padding: 10px 20px;
+    background-color: #ffffff;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+nav ul {
+    list-style: none;
+    padding-right: 13.5rem;
+    margin: 0;
+}
+
+nav ul li {
     display: inline;
-    padding-left: 0.5em;
-    font-size: 1.25em;
-    font-weight: bold;
-    margin-left: 1em;
+    margin-left: 20px; /* Adds spacing between items */
 }
 
-.navigation_bar nav ul li a {
-    padding-right: 0.75em;
-    margin-right: 0.5em;
-    float: right;
+nav h4 {
+    margin: 0; /* Removes default margin */
+    font-size: 1.5rem;
+    padding-left: 11rem;
+
+}
+
+nav ul li a {
     text-decoration: none;
-    color: white;
-}
-
-.navigation_bar nav ul li a:link {
-    color: white;
-}
-
-.navigation_bar nav ul li a:visited {
-    color: white;
-}
-
-.navigation_bar nav ul li a:hover {
-    color: black;
-}
-
-/* Main body styling - index page */
-main {
-    padding-left: 4em;
-}
-
-.index_page .black_box {
-    margin-right: 50%;
-}
-
-.index_page h1, .about_page h1, .projects_page h1 {
-    font-size: 4em;
     font-weight: bold;
-    padding-bottom: 0.5em;
+    color: #a9a9a9;
+    position: relative; /* Needed for the underline effect */
+    padding-bottom: 5px; /* Space between text and line */
 }
 
-.index_page p, .about_page p {
-    font-size: 1.25em;
+nav ul li a:visited {
+    color: #562E18ff;
 }
 
-.index_page h2, .about_page h2, .projects_page h2 {
-    font-size: 2em;
+nav ul li a:hover {
+    color:rgba(86, 46, 24, 0.24);  
+}
+
+
+nav ul li a::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 2px; /* Line thickness */
+    background-color:rgba(86, 46, 24, 0.24); /* Line color */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transform: scaleX(0); /* Hides line initially */
+    transition: transform 0.2s ease-in-out; /* Smooth effect */
+}
+
+nav ul li a:hover::after {
+    transform: scaleX(1); /* Expands line on hover */
+}
+
+
+/* === Footer === */
+
+footer {
+    display: flex;
+    justify-content: space-between; /* Trademark on left, links on right */
+    align-items: center;
+    padding: 10px 20px;
+    color:rgb(154, 142, 136);
+    padding-left: 12rem;
+    padding-right: 12rem;
+}
+
+footer p a {
+    text-decoration: none;
+    color:rgb(154, 142, 136);
+}
+
+footer p a:visited {
+    color:rgb(154, 142, 136);
+}
+
+footer p a:hover {
     font-weight: bold;
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
 }
 
-.index_page img {
-    padding-top: 1.5em;
+footer ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex; /* Aligns list items horizontally */
 }
 
-.index_page ul li {
+footer ul li {
+    margin-left: 15px; /* Add spacing between GitHub & LinkedIn */
+}
+
+footer ul li a {
+    text-decoration: none;
+    font-weight: bold;
+    color:rgb(154, 142, 136);
+    transition: color 0.3s ease;
+}
+
+footer ul li a:hover {
+    color:rgb(154, 142, 136);
+}
+
+/* === Index === */
+
+/* Top Section: Intro and Interactive Elements */
+.top-section {
+    display: grid;
+    grid-template-columns: 2fr 1fr; /* Left content takes 2 parts, image takes 1 */
+    align-items: center; /* Aligns elements vertically */
+    gap: 20px;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+}
+
+
+/* Ensure the text content stays in the left column */
+.intro-text {
+    grid-column: 1; /* Keeps it on the left */
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    gap: 20px; /* Adjust the spacing between items */  
+    padding-left: 12rem;
+}
+
+.intro-text h3 {
+    font-family: 'Caveat', cursive;
+    font-size: 1.5rem;
+}
+
+.intro-text p {
+    font-size: 1.4em;
+    word-spacing: 2px;
+    color:rgb(202, 187, 180);
+    line-height: 1.25; /* Adjust value for more or less space between lines */
+}
+
+.intro-text button {
+    background-color: #562E18ff;
+    border-color: rgba(86, 46, 24);
+    border-radius: 10px;
+    width: 30%;
+    padding: 0.5em;
+    color: white;
+    font-weight: bold;
+}
+
+.intro-text button:hover {
+    background-color:rgba(86, 46, 24, 0.75);
+    border-color: rgba(86, 46, 24, 0.75);
+}
+
+/* Ensure the image stays in the right column */
+.top-section aside {
+    grid-column: 2;
+    padding-right: 24rem;
+}
+
+/* Featured Project */
+.feature-project {
+    background-color:rgba(249, 225, 215, 0.84);
+    display: grid;
+    grid-template-columns: 2fr 1fr; /* Left content takes 2 parts, image takes 1 */
+    align-items: center; /* Aligns elements vertically */
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+}
+
+.feature-text {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    gap: 20px; /* Adjust the spacing between items */  
+    padding-left: 12rem;
+}
+
+.feature-text h3 {
+    grid-column: 1; /* Keeps it on the left */
+    font-family: 'Caveat', cursive;
+    font-size: 1.2rem;
+}
+
+.feature-text ul {
+    list-style: none;
+    grid-column: 1; /* Keeps it on the left */
+}
+
+.feature-text ul li {
     display: inline;
+    background-color:#b9b9b979;
+    border-radius: 15px;
+    width: 12%;
+    padding: 0.5em;
+    margin-left: 5px; /* Adds spacing between items */
 }
 
-.index_page ul li button {
-    font-size: 1.5em;
-    font-family: "lores-12", sans-serif;
+.feature-text ul li:first-of-type {
+    margin-left: 0px;
+}
+
+.feature-header {
+    grid-column: 1; /* Keeps it on the left */
+}
+
+.feature-desc {
+    grid-column: 1; /* Keeps it on the left */
+    font-size: 1.25em;
+    color:rgb(154, 142, 136);
+    line-height: 1.25; /* Adjust value for more or less space between lines */
+    text-align: left;
+    padding-right: 10rem;
+}
+
+.feature-image {
+    margin-top: 0;
+    border-radius: 175px;
+    width: 60%;
+}
+
+.feature-button {
+    grid-column: 1; /* Keeps it on the left */
+    margin-right: 36rem;
+    background-color: #562E18ff;
+    border-radius: 10px;
+    padding: 0.5em;
     color: white;
-    background-color: transparent; 
-    border: 2px solid white;
-    border-radius: 5px;
-    padding: 12px 24px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    cursor: pointer;
-    margin-right: 0.5em;
+    font-weight: bold;
 }
 
-.index_page ul li button:hover {
-    color: black;
-    background-color: white; 
-}
-  
-/* Main page styling - about page */
-
-.about_page h2:first-of-type, .projects_page h2:first-of-type {
-    padding-top: 0em;
+.feature-button:hover {
+    background-color:rgba(86, 46, 24, 0.75);
+    border-color: rgba(86, 46, 24, 0.75);
 }
 
-.about_page h2+p, .projects_page h2+p {
-    font-style: italic;
+.recent-projects {
+    display: grid;
+    align-items: center; /* Aligns elements vertically */
+    padding-top: 2rem;
+    padding-bottom: 4rem;
+}
+
+.recent-projects h2 {
+    padding-left: 12rem;
+    padding-bottom: 1rem;
+}
+
+.recent-projects article {
+    padding-left: 12rem;
+}
+
+.card-subheader {
+    list-style: none;
     margin-bottom: 1em;
 }
 
-.about_page ul li {
+.card-subheader li {
     display: inline;
-    color: black;
-    font-weight: bold;
-    background-color: white; 
-    border: 2px solid white;
-    border-radius: 5px;
-    padding: 6px 12px;
-    text-align: center;
+    background-color: #b9b9b979;
+    border-radius: 15px;
+    width: 12%;
+    padding: 0.5em;
+    margin-left: 5px; /* Adds spacing between items */
 }
 
-.black_box {
-    background-color: rgba(0,0,0, .5);
-    border: 10px solid rgba(0,0,0, .1);
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    padding: 0.5em;
+.card-subheader li:first-of-type {
+    margin-left: 0px; 
+}
+
+.card-header {
+    font-family: 'Caveat', cursive;
+    font-size: 2rem;
+    margin-bottom: 0.5em;
+}
+
+.card-desc {
+    font-size: 1.25em;
+    color:rgb(154, 142, 136);
+    line-height: 1.25; /* Adjust value for more or less space between lines */
+    text-align: left;
+    padding-right: 20rem;
+    margin-bottom: 0.5em;
+}
+
+.card-button {
+    grid-column: 1; /* Keeps it on the left */
+    margin-right: 28rem;
+    background-color: #562E18ff;
     border-radius: 10px;
-    margin-right: 3.5em;
+    padding: 0.5em;
+    font-size: 1.1em;
+    color: white;
+    font-weight: bold;
+    margin-bottom: 1em;
+}
+
+.recent-projects article:last-of-type button {
+    margin-bottom: 2em;
+}
+
+.card-button:hover {
+    background-color:rgba(86, 46, 24, 0.75);
+    border-color: rgba(86, 46, 24, 0.75);
+}
+
+.view-button {
+    margin-left: 36rem;
+    margin-right: 36rem;
+    grid-column: 1; /* Keeps it on the left */
+    background-color: #562E18ff;
+    border-radius: 10px;
+    padding: 0.5em;
+    font-size: 1.1em;
+    color: white;
+    font-weight: bold;
+}
+
+.view-button:hover {
+    background-color:rgba(86, 46, 24, 0.75);
+    border-color: rgba(86, 46, 24, 0.75);
+}
+
+/* === Projects === */
+
+.relevant-project {
+    background-color:rgba(249, 225, 215, 0.84);
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+}
+
+.relevant-project h2 {
+    padding-left: 12rem;
+    padding-bottom: 0.5em;
+}
+
+.grid {
+    display: grid;
+    align-items: center; /* Aligns elements vertically */    
+}
+
+.project {
+    padding-left: 12rem;
+    padding-bottom: 0em;
+}
+
+.project:nth-of-type(2n) {
+    margin-top: 0em;
+}
+
+/* === About === */
+
+.about-me {
+    background-color:rgba(249, 225, 215, 0.84);
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.about-me h2 {
+    padding-left: 12rem;
     padding-bottom: 1em;
 }
 
-/* Main page styling - projects page */
-
-.progress {
-    font-weight: bold;
-    color: lavender;
+.about-me p {
+    grid-column: 1; /* Keeps it on the left */
+    font-size: 1.25em;
+    color:rgb(154, 142, 136);
+    line-height: 1.25; /* Adjust value for more or less space between lines */
+    text-align: left;
+    padding-left: 12rem;
+    padding-right: 12rem;
+    padding-bottom: 1em;
 }
 
-.projects_page p:first-of-type .progress {
-    color: #FB6F92;
-}
-
-/* Footer styling */
-
-.footer {
-    float: right;
-    padding-left: 4em;
-    margin-top: 6em;
-}
-
-  /* Card features */
-  .card {
-    display: flex;
-    align-items: center;
-    width: 800px;
-    background-color: rgba(0,0,0, .5);
-    border: 10px solid rgba(0,0,0, .1);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 2em;
-  }
-  
-  .card-image {
-    flex: 0 0 auto;
-    width: 250px;
-    height: 250px;
-    border-radius: 5%;
-    margin-right: 20px;
-    object-fit: cover;
-  }
-  
-  .card-content {
-    flex: 1 1 auto;
-  }
-  
-  .card-title {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: white;
-  }
-  
-  .card-text {
-    font-size: 14px;
-    line-height: 1.5;
-    color: white;
-  }
-  
-  .card-button {
-    display: inline-block;
-    color: white;
-    background-color: #FB6F92; 
-    border: 2px solid #FB6F92;
-    padding: 10px 16px;
-    text-decoration: none;
-    border-radius: 4px;
-    transition: background-color 0.3s;
-  }
-  
-  .card-button:hover {
-    color: black;
+.work-experience {
     background-color: white; 
-    border-color: white;
+}
 
-  }
+.work-experience h2 {
+    padding-left: 12rem;
+    padding-bottom: 1em;
+    padding-top: 1em;
+}
 
-  .container-of-cards {
-    margin: auto;
-    width: 50%;
-  }
-  
-  
+.work-experience article {
+    padding-left: 12rem;
+    padding-bottom: 1em;
+}
+
+.skills-section h2 {
+    padding-top: 0em;
+}
+
+.skills-section ul {
+    padding-left: 12rem;
+    padding-bottom: 2em;
+}

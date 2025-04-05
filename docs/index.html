@@ -2,40 +2,143 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Anjola Aina</title>
-    <link rel="stylesheet" href="https://use.typekit.net/rbt2uea.css">
+    <title>Home</title>
     <link rel="stylesheet" href="css/reset.css"/> 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <!-- For Github and LinkedIn icon -->
     <link rel="stylesheet" href="css/styles.css"/>
-    <script type="text/javascript" src="buttons.js"></script>   
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />     
+    <script type="text/javascript" src="js/buttons.js"></script>   
 </head>
 
 <body>
-    <header class="navigation_bar">
+    <header>
         <nav>
+            <h4>Home</h4>
             <ul>
-                <li><span>Anjola Aina</span></li>
+                <li><a href="">Home</a></li>
                 <li><a href="projects.html">Projects</a></li>
                 <li><a href="about.html">About</a></li>
-                <li><a href="">Home</a></li>
+                <li><a href="contact.html">Contact</a></li>
             </ul>        
         </nav>
     </header>
 
-    <main class="index_page">
-        <h1>Unleashing Imagination, <br>One Byte at a Time.</h1>
-        <div class="black_box">
-            <p> My passion lies in developing captivating games tailored for casual gamers, <br>combining creativity and technical expertise to deliver visually appealing and immersive experiences.</p>
-            <br>
-            <p>Check out all the projects I've made available on my GitHub,<br>or check out my LinkedIn to learn more about me!</p>
-            <br>
-            <ul>
-                <li><button id="linkedin_button">LinkedIn <i class="fa fa-linkedin-square"></i></button></li>
-                <li><button id="github_button">GitHub <i class="fa fa-github"></i></button></li>
-            </ul>
-        </div>
+    <main class="container">
+
+        <!-- Left side of the page -->
+
+        <section class="top-section">
+            
+            <div class="intro-text"> <!-- Add a wrapper for left content -->
+                <h3>Welcome to my cozy corner!</h3>
+                <h1>Hi, I'm Anjola</h1>
+                <p>Building beautiful digital experiences with<br> code, creativity, and attention to detail</p>
+                <button class="explore-button">Explore my work!</button>
+            </div>
+
+            <!-- Right side of the page -->
+            <aside class="interactive_element">
+                <img src="resources/cat_boba.gif">
+            </aside>
+
+        </section>
         
+
+        <!-- Featured Project -->
+
+        <section class="feature-project ">
+
+            <div class="feature-text">
+                <h3>Featured Work</h3>
+            
+                <ul>
+                    <li>C++</li>
+                    <li>SDL</li>
+                    <li>CMake</li>
+                </ul>
+        
+                <h2 class="feature-header">Penguin Framework</h2>
+                    
+                    <!-- More detailed description -->
+                <p class="feature-desc">
+                    Penguin Framework is a lightweight, modern game development framework built with C++20, SDL3, and CMake, designed to help developers easily create simple and fun 2D games without the need for an external editor.
+                </p>
+                <p class="feature-desc">
+                    Aimed to be like MonoGame but for C++, Penguin Framework provides a flexible environment where developers can focus on creating their game logic while the framework handles low-level details like window management, input handling, and FPS control.                </p>
+                <button class="feature-button" data-github="https://github.com/anj0la/penguin_framework">Explore project ></button>
+            </div>
+        
+
+            <img class="feature-image" src="resources/logo_cropped.png">
+
+
+        </section>
+
+        <!-- Recent projects -->
+
+        <section class="recent-projects">
+
+            <h2 class>Recent Projects</h2>
+            
+            <article>
+                <h3 class="card-header">Filtering Pushshift Data</h3>
+                <ul class="card-subheader">
+                    <li>Python</li>
+                    <li>zstandard</li>
+                    <li>argparse</li>
+                </ul>
+                <p class="card-desc">A script allowing one to filter Reddit comments from decompressed zst Pushshift data files.</p>
+                <button class="card-button" data-github="https://gist.github.com/anj0la/749eae7c25b81ce7fda13b00b960f2cf">Explore project ></button>
+            </article>
+
+            <article>
+                <h3 class="card-header">MovieSentiments</h3>
+                <ul class="card-subheader">
+                    <li>Python</li>
+                    <li>Streamlit</li>
+                    <li>NumPy</li>
+                </ul>
+                <p class="card-desc">A project designed to analyze IMDB movie reviews using a custom-built Logistic Regression model.</p>
+                <button class="card-button" data-github="https://github.com/anj0la/MovieSentiments">Explore project ></button>
+            </article>
+
+            <article>
+                <h3 class="card-header">Parallel Needleman-Wunsch</h3>
+                <ul class="card-subheader">
+                    <li>C</li>
+                    <li>OpenMP</li>
+                    <li>Linux</li>
+                </ul>
+                <p class="card-desc">A parallel implementation of the Needleman-Wunsch algorithm, a pairwise DNA global sequence alignment algorithm used to obtain the optimal alignment between two sequences.</p>
+                <button class="card-button" data-github="https://github.com/anj0la/nw_source_code">Explore project ></button>
+            </article>
+
+            <article>
+                <h3 class="card-header">Multithreaded Snake</h3>
+                <ul class="card-subheader">
+                    <li>C/C++</li>
+                    <li>Allegro 4.4.2</li>
+                    <li>Pthreads</li>
+                </ul>
+                <p class="card-desc">A multithreaded implementation of the classic Snake game.</p>
+                <button class="card-button" data-github="https://github.com/anj0la/MultithreadedSnake">Explore project ></button>
+            </article>
+
+            <button class="view-button">View all projects -></button>
+
+        </section>
+
     </main>
+
+    <footer>
+        <p>&copy; 2025 Anjola Aina. All rights reserved. GIFs from <a href="https://getstickerpack.com/stickers/mochi-cat-you.">Sticker maker for WhatsApp.</p>
+        <ul>
+            <li><a href="https://github.com/anj0la"><i class="devicon-github-original"></i></a></li>
+            <li><a href="https://www.linkedin.com/in/anjola-aina/"><i class="devicon-linkedin-plain"></i></a></li>
+        </ul>
+    </footer>
 
 </body>
 </html>

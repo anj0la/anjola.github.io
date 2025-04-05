@@ -3,58 +3,201 @@
 <head>
     <meta charset="utf-8">
     <title>About</title>
-    <link rel="stylesheet" href="https://use.typekit.net/rbt2uea.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <!-- For Github and LinkedIn icon -->
     <link rel="stylesheet" href="css/reset.css"/> 
-    <link rel="stylesheet" href="css/styles.css"/> 
+    <link rel="stylesheet" href="css/styles.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />     
 </head>
 
 <body>
-    <header class="navigation_bar">
+    <header>
         <nav>
+            <h4>About</h4>
             <ul>
-                <li><span>Anjola Aina</span></li>
+                <li><a href="index.html">Home</a></li>
                 <li><a href="projects.html">Projects</a></li>
                 <li><a href="">About</a></li>
-                <li><a href="index.html">Home</a></li>
+                <li><a href="contact.html">Contact</a></li>
             </ul>        
         </nav>
     </header>
 
-    <main class="about_page">
-        <h1>From Ground Zero<br>To Digital Heights.</h1>
-        <div class="black_box">
-            <h2>Junior Software Developer</h2>
-            <p>May 2023 - August 2023</p> 
-            <p>My work focuses on contributing to the development of software solutions by writing code, assisting with testing and debugging, and collaborating with the development team under the guidance of senior developers.</p>
-            <h2>Research Assistant</h2>
-            <p>May 2022 - August 2022</p> 
-            <p>My work focused on developing a user-friendly machine learning interface, enabling interactive exploration of AI models.</p>
+    <main>
+
+         <!-- Left side of the page -->
+
+         <section class="top-section">
             
-            <p>I have also created a few desktop applications for some clients on the 
-                side, from creating a simple property management application that works 
-                offline to creating a form that users can enter and the sending those 
-                values to a database.</p>
-    
-            <h2>Hobbies</h2>
-            <p>Gaming!</p>
-            <p>In my free time, I love playing and creating games! Currently, I have completed three games with a third one in the prototype stage.</p>
-            <p>Making software that is not only fun to use, but fun to create is a motto that I stand by. If I don't enjoy the process of making the software, then how can I except to create something that I'll enjoy?</p>
+            <div class="intro-text"> <!-- Add a wrapper for left content -->
+                <h3>Welcome to my cozy corner!</h3>
+                <h1>About Me</h1>
+                <p>Learn more about me!</p>
+            </div>
+
+            <!-- Right side of the page -->
+            <aside>
+                <img src="resources/cat_throwing_hearts.gif">
+            </aside>
+
+        </section>
+
+        <section class="about-me">
+
+            <h2>My Background</h2>
+
+            <p>
+                Coding, to me, is as much an art form as it is a science. Having always been a creative soul with a fondness for 
+                painting and drawing, I've found Computing Science to be the perfect fusion of my analytical and artistic talents. 
+                It's here that I can craft projects that not only showcase my skills but also ignite the spark of innovation.
+
+                I create coding projects that mix my analytical / problem solving skills, as well as my design and artistic skills.
+                From creating personal portfolios to constructing game frameworks, I focus on projects that not only provide me personal enjoyment,
+                but that could pteontially make an impact in the future.
+            </p>
+
+            <p>
+                Other than coding, I'm a fitness enthustiant and enjoy watching football-not the American kind! I also enjoy playing games, especially cozy
+                games like Harvest Moon, Story of Seasons and Animal Crossing. I also enjoy the Sims 4 and weirdly PUGB. My fascincation for first-person shooter
+                games is quite interesting indeed...
+            </p>
+
+        </section>
+
+        <section class="work-experience">
+
+            <!-- Popup for each work experience section to show more description -->
+
+            <h2>Work Experience</h2>
+
+            <article>
+                <h3 class="card-header">Marking Assistant</h3>
+                <ul class="card-subheader">
+                    <li>Critical Thinking</li>
+                    <li>Attention to Detail</li>
+                    <li>Written Communication</li>
+                </ul>
+                <p class="card-desc">February 2025 - Present</p>
+                <p class="card-desc">
+                    As a Marking Assistant for a university-level History and Theory of Computing Science course, 
+                    I evaluate and grade student assignments, ensuring fair and consistent assessment based on course criteria. 
+                    This role requires strong attention to detail, critical thinking, and adherence to academic standards to provide 
+                    accurate feedback that supports student learning.
+                </p>
+            </article>
+  
+            <article>
+                <h3 class="card-header">Information Technology Intern</h3>
+                <ul class="card-subheader">
+                    <li>Information Technology</li>
+                    <li>Computer Hardware Assembly</li>
+                    <li>Troubleshooting</li>
+                </ul>
+                <p class="card-desc">September 2023 - December 2023</p>
+                <p class="card-desc">
+                    During my Hardware Practicum, I demonstrated strong problem-solving and critical-thinking skills by diagnosing and 
+                    resolving a variety of computer issues. With keen attention to detail, I disassembled and reassembled computers, ensuring 
+                    proper functionality while preventing damage. My responsibilities included replacing SSDs, backing up and restoring data, 
+                    installing new Windows versions and updates, and configuring essential drivers. I also troubleshot hardware and software issues, 
+                    installed security software to prevent malware infections, and performed virus removal and system cleanups to optimize performance.
+
+                    Additionally, I built two computers from scratch using parts available in the store. This involved carefully installing the CPU onto 
+                    the motherboard, inserting RAM, connecting power supply cables, attaching fans, and ensuring all components were properly secured. 
+                    After assembling the hardware, I installed Windows on the newly built systems, ensuring they were fully operational and ready for 
+                    sale to customers.
+                </p>
+            </article>
+
+
+            <article>
+                <h3 class="card-header">Junior Software Developer</h3>
+                <ul class="card-subheader">
+                    <li>Python</li>
+                    <li>SQL</li>
+                    <li>REST APIs</li>
+                    <li>Back-End Development</li>
+                    <li>Google Cloud Platform (GCP)</li>
+                </ul>
+                <p class="card-desc">May 2023 - August 2023</p>
+                <p class="card-desc">
+                    As a Junior Software Developer at Areto Labs, I developed a Python-based YouTube data scraper that processed comments and replies, 
+                    and ran periodically via an API endpoint. I also contributed to the backend development of the social media moderation SaaS platform 
+                    by designing and optimizing SQL queries, building REST API endpoints, and implementing automated moderation workflows. I wrote unit tests 
+                    for database operations and integration tests for API endpoints. Additionally, I implemented a Google Cloud uptime monitoring system and 
+                    worked with Docker for testing, while collaborating in an Agile environment to enhance platform functionality.
+                </p>
+            </article>
             
-            <h2>Skills</h2>
-            <ul>
-                <li>Java</li>
-                <li>C++</li>
-                <li>C</li>
-                <li>Python</li>
-                <li>JavaScript</li>
-                <li>PHP</li>
-                <li>HTML</li>
-                <li>CSS</li>
-                <li>SQL</li>
-            </ul>
-        </div>
-        
+            <article>
+                <h3 class="card-header">Teaching Assistant</h3>
+                <ul class="card-subheader">
+                    <li>Python</li>
+                    <li>Problem Solving</li>
+                    <li>Teaching</li>
+                </ul>
+                <p class="card-desc">Janaury 2023 - April 2023</p>
+                <p class="card-desc">
+                    As a Teaching Assistant for a first-year Python programming course, I provided technical support and guidance to students, 
+                    leveraging advanced Python expertise to help them complete lab work and assignments. I fostered a supportive learning environment 
+                    by mentoring students, enhancing their problem-solving skills, and strengthening their coding knowledge. This role required effective 
+                    communication, leadership, and the ability to simplify complex concepts to ensure student success.
+                </p>
+            </article>
+
+            <article>
+                <h3 class="card-header">Research Assistant</h3>
+                <ul class="card-subheader">
+                    <li>Python</li>
+                    <li>Streamlit</li>
+                    <li>Front-End Development</li>
+                    <li>Material UI</li>
+                    <li>UI Design</li>
+                </ul>
+                <p class="card-desc">May 2022 - August 2022</p>
+                <p class="card-desc">
+                    In this role, I was responsible for bridging machine learning models and user-facing applications by building a general machine learning 
+                    interface in Python using Streamlit. I created a middleware functionality to preprocess user inputs into numerical formats for the model, 
+                    retrieve predictions and scores, and present them on a user-friendly front end. I also customized the dashboard to provide clear, 
+                    interactive visualizations, making it easy for end users to interpret positive and negative sentiment results. This required integrating 
+                    modular designs and prioritizing accessibility while collaborating with the research team to refine the interface.
+                </p>
+            </article>
+
+            <section class="skills-section">
+                <h2>Languages</h2>
+                <ul class="card-subheader">
+                    <li>Python</li>
+                    <li>C++</li>
+                    <li>Java</li>
+                    <li>C</li>
+                    <li>C#</li>
+                    <li>GDScript</li>
+                    <li>Lua</li>
+                    <li>JavaScript</li>
+                    <li>Swift</li>
+                    <li>Scheme</li>
+                    <li>Prolog</li>
+                    <li>PHP</li>
+                    <li>HTML</li>
+                    <li>CSS</li>
+                    <li>SQLite</li>
+                    <li>MySQL</li>
+                </ul>
+
+            </section>
+
+        </section>
+
     </main>
+
+    <footer>
+        <p>&copy; 2025 Anjola Aina. All rights reserved. GIFs from <a href="https://getstickerpack.com/stickers/mochi-cat-you.">Sticker maker for WhatsApp.</p>
+        <ul>
+            <li><a href="https://github.com/anj0la"><i class="devicon-github-original"></i></a></li>
+            <li><a href="https://www.linkedin.com/in/anjola-aina/"><i class="devicon-linkedin-plain"></i></a></li>
+        </ul>
+    </footer>
+
 </body>
 </html>

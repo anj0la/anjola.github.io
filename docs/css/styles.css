@@ -4,8 +4,8 @@
     --bg-color: #ffffff;
     --text-color: #333333;
     --heading-color: #222222;
-    --link-color: #0066cc;
-    --link-hover-color: #004499;
+    --link-color: #393939;
+    --link-hover-color: #a8a7a7;
     --nav-active-color: #555555;
     --border-color: #e0e0e0;
     --card-bg: #f8f8f8;
@@ -18,8 +18,8 @@
     --bg-color: #121212;
     --text-color: #e0e0e0;
     --heading-color: #ffffff;
-    --link-color: #6699ff;
-    --link-hover-color: #99bbff;
+    --link-color: #838383;
+    --link-hover-color: #a8a7a7;
     --nav-active-color: #aaaaaa;
     --border-color: #444444;
     --card-bg: #1e1e1e;
@@ -81,6 +81,28 @@ a {
 a:hover, a:focus {
     color: var(--link-hover-color);
 }
+
+/* Buttons */
+button {
+    background-color: var(--button-bg);
+    color: var(--text-color);
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
+  }
+  
+  button:hover {
+    background-color: var(--button-hover-bg);
+  }
+  
+  .view-button {
+    display: inline-block;
+    font-weight: 500;
+  }
   
 /* Header and Navigation */
 header {
@@ -303,7 +325,7 @@ article:hover {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 1.5rem;
-    grid-row-gap: 2rem;
+    margin-bottom: 2rem;
 }
 
 /* Blog entry link - makes whole card clickable */
@@ -311,18 +333,18 @@ article:hover {
     color: var(--text-color);
     text-decoration: none;
     display: block;
-    height: 100%;
 }
 
 /* Blog entries styled like cards */
 .blog-entry {
-    margin-bottom: 0;
     padding: 1rem;
     background-color: var(--card-bg);
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     transition: transform 0.2s, box-shadow 0.2s;
-    height: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 90%;
 }
 
 .blog-entry:hover {
@@ -353,6 +375,8 @@ article:hover {
 .blog-entry-excerpt {
     margin-top: 0.5rem;
     margin-bottom: 0;
+    flex-grow: 1; /* This will make the excerpt expand to fill available space */
+
 }
 
 /* Blog entry tags */

@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projects</title>
     <link rel="stylesheet" href="css/reset.css"/> 
     <link rel="stylesheet" href="css/styles.css"/> 
@@ -9,192 +10,184 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />     
-    <script type="text/javascript" src="js/buttons.js"></script>   
+    <script type="text/javascript" src="js/scripts.js"></script>
 </head>
 
 <body>
     <header>
         <nav>
-            <h4>Projects</h4>
+            <div class="home-link"><a href="index.html">Home</a></div>
             <ul>
-                <li><a href="index.html">Home</a></li>
                 <li><a href="">Projects</a></li>
                 <li><a href="about.html">About</a></li>
+                <li><a href="blog.html">Blog</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>        
         </nav>
     </header>
 
     <main>
-
-        <!-- Left side of the page -->
-
         <section class="top-section">
-            
-            <div class="intro-text"> <!-- Add a wrapper for left content -->
-                <h3>Welcome to my cozy projects corner!</h3>
+            <div class="intro-text">
                 <h1>Selected Projects</h1>
-                <p>Take a look at some of the projects that I've worked on!</p>
             </div>
-
-            <!-- Right side of the page -->
-            <aside>
-                <img src="resources/cat_sitting.gif">
-            </aside>
-
         </section>
-         <!-- Recent projects -->
 
         <section class="relevant-project">
-
-            <h2>Relevant Projects</h2>
-
             <div class="grid">
-                <article class="project">
-                    <h3 class="card-header">Website Portfolio</h3>
-                    <ul class="card-subheader">
-                        <li>HTML5</li>
-                        <li>CSS</li>
-                        <li>JavaScript</li>
-                    </ul>
-                    <p class="card-desc">A minimalist website portfolio.</p>
-                    <button class="card-button" data-github="https://github.com/anj0la/anjola.github.io">Explore project ></button>
-                </article>
-    
-                <article class="project">
-                    <h3 class="card-header">Filtering Pushshift Data</h3>
-                    <ul class="card-subheader">
-                        <li>Python</li>
-                        <li>zstandard</li>
-                        <li>argparse</li>
-                    </ul>
-                    <p class="card-desc">A script allowing one to filter Reddit comments from decompressed zst Pushshift data files.</p>
-                    <button class="card-button" data-github="https://gist.github.com/anj0la/749eae7c25b81ce7fda13b00b960f2cf">Explore project ></button>
-                </article>
-    
-                <article class="project">
-                    <h3 class="card-header">Penguin Framework</h3>
-                    <ul class="card-subheader">
-                        <li>C++</li>
-                        <li>SDL</li>
-                        <li>CMake</li>
-                    </ul>
-                    <p class="card-desc">A game framework built with C++ and SDL for creating fun and adorable 2D games.</p>
-                    <button class="card-button" data-github="https://github.com/anj0la/penguin_framework">Explore project ></button>
-                </article>
-    
-                <article class="project">
-                    <h3 class="card-header">Baking Frenzy</h3>
-                    <ul class="card-subheader">
-                        <li>Godot</li>
-                        <li>GDScript</li>
-                        <li>Paint.net</li>
-                    </ul>
-                    <p class="card-desc">A single-player action game where players manage a bustling bakery, racing to gather ingredients, bake, and serve as many treats as possible before closing time.</p>
-                    <button class="card-button" data-github="https://github.com/anj0la/BakingFrenzy">Explore project ></button>
-                </article>
-    
-                <article class="project">
-                    <h3 class="card-header">MovieSentiments</h3>
-                    <ul class="card-subheader">
-                        <li>Python</li>
-                        <li>Streamlit</li>
-                        <li>NumPy</li>
-                    </ul>
-                    <p class="card-desc">A project designed to analyze IMDB movie reviews using a custom-built Logistic Regression model.</p>
-                    <button class="card-button" data-github="https://github.com/anj0la/MovieSentiments">Explore project ></button>
-                </article>
-    
-                <article class="project">
-                    <h3 class="card-header">FitSentiment</h3>
-                    <ul class="card-subheader">
-                        <li>Python</li>
-                        <li>PyTorch</li>
-                        <li>Pandas</li>
-                    </ul>
-                    <p class="card-desc">A sentiment analysis tool designed to analyze discussions about calorie counting apps.</p>
-                    <button class="card-button" data-github="https://github.com/anj0la/FitSentiment">Explore project ></button>
-                </article>
-    
-                <article class="project">
-                    <h3 class="card-header">FitFolio</h3>
-                    <ul class="card-subheader">
-                        <li>Swift</li>
-                        <li>SwiftUI</li>
-                        <li>Figma</li>
-                    </ul>
-                    <p class="card-desc">A simple Swift-based mockup app designed to explore calorie counting functionality while learning iOS development.</p>
-                    <button class="card-button" data-github="https://github.com/anj0la/FitFolio">Explore project ></button>
-                </article>
-    
-                <article class="project">
-                    <h3 class="card-header">Parallel Needleman-Wunsch</h3>
-                    <ul class="card-subheader">
-                        <li>C</li>
-                        <li>OpenMP</li>
-                        <li>Linux</li>
-                    </ul>
-                    <p class="card-desc">A parallel implementation of the Needleman-Wunsch algorithm, a pairwise DNA global sequence alignment algorithm used to obtain the optimal alignment between two sequences.</p>
-                    <button class="card-button" data-github="https://github.com/anj0la/nw_source_code">Explore project ></button>
-                </article>
-    
-                <article class="project">
-                    <h3 class="card-header">Multithreaded Snake</h3>
-                    <ul class="card-subheader">
-                        <li>C/C++</li>
-                        <li>Allegro 4.4.2</li>
-                        <li>Pthreads</li>
-                    </ul>
-                    <p class="card-desc">A multithreaded implementation of the classic Snake game.</p>
-                    <button class="card-button" data-github="https://github.com/anj0la/MultithreadedSnake">Explore project ></button>
-                </article>
-    
-                <article class="project">
-                    <h3 class="card-header">Ocean Cleaning Frenzy</h3>
-                    <ul class="card-subheader">
-                        <li>C/C++</li>
-                        <li>Allegro 4.4.2</li>
-                        <li>Photoshop</li>
-                    </ul>
-                    <p class="card-desc">An action game where players must clean up as much trash thrown from the top of the ocean before the timer runs out.</p>
-                    <button class="card-button" data-github="https://github.com/anj0la/OceanCleaningFrenzy">Explore project ></button>
-                </article>
-    
-                <article class="project">
-                    <h3 class="card-header">Candy Invaders</h3>
-                    <ul class="card-subheader">
-                        <li>C/C++</li>
-                        <li>Allegro 4.4.2</li>
-                        <li>Procreate</li>
-                    </ul>
-                    <p class="card-desc">A shoot-em-up style game where players control a candy ship and try to eliminate as many candy monsters as possible.</p>
-                    <button class="card-button" data-github="https://github.com/anj0la/CandyInvaders">Explore project ></button>
-                </article>
-            
-                <article class="project">
-                    <h3 class="card-header">Property Management Application</h3>
-                    <ul class="card-subheader">
-                        <li>Java</li>
-                        <li>JavaFX</li>
-                        <li>SQLite</li>
-                    </ul>
-                    <p class="card-desc">A property management application that tracks the rent, expenses and payment of each client's property, along with the commission earned for each property being managed.</p>
-                    <button class="card-button" data-github="https://github.com/anj0la/Property-Management-Application">Explore project ></button>
-                </article>
-
-            </div>  
-
+                <a href="https://github.com/anj0la/anjola.github.io" class="project-card-link">
+                    <article class="project">
+                        <h3 class="card-header">Website Portfolio</h3>
+                        <ul class="card-subheader">
+                            <li>HTML5</li>
+                            <li>CSS</li>
+                            <li>JavaScript</li>
+                        </ul>
+                        <p class="card-desc">A minimalist website portfolio built with vanilla CSS and JavaScript.</p>
+                    </article>
+                </a>
+                
+                <a href="https://gist.github.com/anj0la/749eae7c25b81ce7fda13b00b960f2cf" class="project-card-link">
+                    <article class="project">
+                        <h3 class="card-header">Filtering Pushshift Data</h3>
+                        <ul class="card-subheader">
+                            <li>Python</li>
+                            <li>Console</li>
+                            <li>argparse</li>
+                        </ul>
+                        <p class="card-desc">A Python script to filter Reddit comments from decompressed zst Pushshift data files.</p>
+                    </article>
+                </a>
+                
+                <a href="https://github.com/anj0la/penguin_framework" class="project-card-link">
+                    <article class="project">
+                        <h3 class="card-header">Penguin Framework</h3>
+                        <ul class="card-subheader">
+                            <li>C++</li>
+                            <li>SDL</li>
+                            <li>CMake</li>
+                        </ul>
+                        <p class="card-desc">A game framework built with C++ 20 and SDL for creating fun and adorable 2D games.</p>
+                    </article>
+                </a>
+                
+                <a href="https://github.com/anj0la/BakingFrenzy" class="project-card-link">
+                    <article class="project">
+                        <h3 class="card-header">Baking Frenzy</h3>
+                        <ul class="card-subheader">
+                            <li>Godot</li>
+                            <li>GDScript</li>
+                            <li>Paint.net</li>
+                        </ul>
+                        <p class="card-desc">A single-player action game where players manage a bustling bakery, racing to gather ingredients, bake, and serve as many treats as possible before closing time.</p>
+                    </article>
+                </a>
+                
+                <a href="https://github.com/anj0la/MovieSentiments" class="project-card-link">
+                    <article class="project">
+                        <h3 class="card-header">MovieSentiments</h3>
+                        <ul class="card-subheader">
+                            <li>Python</li>
+                            <li>Streamlit</li>
+                            <li>NumPy</li>
+                        </ul>
+                        <p class="card-desc">A project designed to analyze IMDB movie reviews using a custom-built Logistic Regression model.</p>
+                    </article>
+                </a>
+                
+                <a href="https://github.com/anj0la/FitSentiment" class="project-card-link">
+                    <article class="project">
+                        <h3 class="card-header">FitSentiment</h3>
+                        <ul class="card-subheader">
+                            <li>Python</li>
+                            <li>PyTorch</li>
+                            <li>Pandas</li>
+                        </ul>
+                        <p class="card-desc">A sentiment analysis tool designed to analyze discussions about calorie counting apps.</p>
+                    </article>
+                </a>
+                
+                <a href="https://github.com/anj0la/FitFolio" class="project-card-link">
+                    <article class="project">
+                        <h3 class="card-header">FitFolio</h3>
+                        <ul class="card-subheader">
+                            <li>Swift</li>
+                            <li>SwiftUI</li>
+                            <li>Figma</li>
+                        </ul>
+                        <p class="card-desc">A simple Swift-based mockup app designed to explore calorie counting functionality while learning iOS development.</p>
+                    </article>
+                </a>
+                
+                <a href="https://github.com/anj0la/nw_source_code" class="project-card-link">
+                    <article class="project">
+                        <h3 class="card-header">Parallel Needleman-Wunsch</h3>
+                        <ul class="card-subheader">
+                            <li>C</li>
+                            <li>OpenMP</li>
+                            <li>Linux</li>
+                        </ul>
+                        <p class="card-desc">A parallel implementation of the Needleman-Wunsch algorithm, a pairwise DNA global sequence alignment algorithm used to obtain the optimal alignment between two sequences.</p>
+                    </article>
+                </a>
+                
+                <a href="https://github.com/anj0la/MultithreadedSnake" class="project-card-link">
+                    <article class="project">
+                        <h3 class="card-header">Multithreaded Snake</h3>
+                        <ul class="card-subheader">
+                            <li>C/C++</li>
+                            <li>Allegro 4.4.2</li>
+                            <li>Pthreads</li>
+                        </ul>
+                        <p class="card-desc">A multithreaded implementation of the classic Snake game.</p>
+                    </article>
+                </a>
+                
+                <a href="https://github.com/anj0la/OceanCleaningFrenzy" class="project-card-link">
+                    <article class="project">
+                        <h3 class="card-header">Ocean Cleaning Frenzy</h3>
+                        <ul class="card-subheader">
+                            <li>C/C++</li>
+                            <li>Allegro 4.4.2</li>
+                            <li>Photoshop</li>
+                        </ul>
+                        <p class="card-desc">An action game where players must clean up as much trash thrown from the top of the ocean before the timer runs out.</p>
+                    </article>
+                </a>
+                
+                <a href="https://github.com/anj0la/CandyInvaders" class="project-card-link">
+                    <article class="project">
+                        <h3 class="card-header">Candy Invaders</h3>
+                        <ul class="card-subheader">
+                            <li>C/C++</li>
+                            <li>Allegro 4.4.2</li>
+                            <li>Procreate</li>
+                        </ul>
+                        <p class="card-desc">A shoot-em-up style game where players control a candy ship and try to eliminate as many candy monsters as possible.</p>
+                    </article>
+                </a>
+                
+                <a href="https://github.com/anj0la/Property-Management-Application" class="project-card-link">
+                    <article class="project">
+                        <h3 class="card-header">Property Management Application</h3>
+                        <ul class="card-subheader">
+                            <li>Java</li>
+                            <li>JavaFX</li>
+                            <li>SQLite</li>
+                        </ul>
+                        <p class="card-desc">A property management application that tracks the rent, expenses and payment of each client's property, along with the commission earned for each property being managed.</p>
+                    </article>
+                </a>
+            </div>
         </section>
-        
     </main>
 
     <footer>
-        <p>&copy; 2025 Anjola Aina. All rights reserved. GIFs from <a href="https://getstickerpack.com/stickers/mochi-cat-you.">Sticker maker for WhatsApp.</p>
+        <p>&copy; 2025 Anjola Aina. All rights reserved.</p>
         <ul>
             <li><a href="https://github.com/anj0la"><i class="devicon-github-original"></i></a></li>
             <li><a href="https://www.linkedin.com/in/anjola-aina/"><i class="devicon-linkedin-plain"></i></a></li>
         </ul>
     </footer>
-
 </body>
 </html>

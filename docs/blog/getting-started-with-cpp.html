@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Getting Started with Modern C++ - Blog</title>
+    <link rel="stylesheet" href="../css/reset.css"/> 
+    <link rel="stylesheet" href="../css/styles.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+    <script type="text/javascript" src="../js/scripts.js"></script>
+    <style>
+        /* Additional styles for blog post */
+        .blog-post {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .blog-post h1 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .blog-post-meta {
+            margin-bottom: 2rem;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+        
+        .blog-post-content h2 {
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .blog-post-content p {
+            margin-bottom: 1.5rem;
+        }
+        
+        .blog-post-content ul, .blog-post-content ol {
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+        }
+        
+        .blog-post-content li {
+            margin-bottom: 0.5rem;
+        }
+        
+        code {
+            font-family: monospace;
+            background-color: var(--card-bg);
+            padding: 0.1rem 0.3rem;
+            border-radius: 3px;
+        }
+        
+        pre {
+            background-color: var(--card-bg);
+            padding: 1rem;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+        
+        pre code {
+            background-color: transparent;
+            padding: 0;
+        }
+        
+        .back-to-blog {
+            display: block;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <h4>Blog</h4>
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../projects.html">Projects</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../blog.html">Blog</a></li>
+                <li><a href="../contact.html">Contact</a></li>
+            </ul>        
+        </nav>
+    </header>
+
+    <main>
+        <a class="back-to-blog" href="../blog.html">← Back to blog</a>
+        
+        <article class="blog-post">
+            <h1>Getting Started with Modern C++</h1>
+            <div class="blog-post-meta">March 28, 2025 · 10 min read</div>
+            
+            <div class="blog-post-content">
+                <p>
+                    C++ has evolved significantly since its creation, especially with the C++11, C++14, C++17, 
+                    and C++20 standards. These modern versions of C++ offer features that make the language 
+                    more expressive, safer, and easier to use while maintaining its performance advantages.
+                </p>
+                
+                <h2>Modern C++ Features</h2>
+                <p>
+                    The latest C++ standards have introduced numerous features that simplify code and improve 
+                    safety. Here are some of the most important ones:
+                </p>
+                
+                <h3>Auto Type Deduction</h3>
+                <p>
+                    The <code>auto</code> keyword allows the compiler to deduce the type of a variable from 
+                    its initializer:
+                </p>
+                
+                <pre><code>// Instead of:
+std::vector&lt;int&gt;::iterator it = myVector.begin();
+
+// You can write:
+auto it = myVector.begin();
+</code></pre>
+                
+                <h3>Range-based For Loops</h3>
+                <p>
+                    Range-based for loops make iterating over containers more concise:
+                </p>
+                
+                <pre><code>std::vector&lt;int&gt; numbers = {1, 2, 3, 4, 5};
+
+// Old way:
+for (std::vector&lt;int&gt;::iterator it = numbers.begin(); it != numbers.end(); ++it) {
+    std::cout << *it << std::endl;
+}
+
+// Modern way:
+for (const auto& num : numbers) {
+    std::cout << num << std::endl;
+}
+</code></pre>
+                
+                <h3>Smart Pointers</h3>
+                <p>
+                    Smart pointers help manage memory automatically, reducing the risk of memory leaks:
+                </p>
+                
+                <pre><code>// Instead of raw pointers:
+MyClass* ptr = new MyClass();
+// ... use ptr
+delete ptr; // Don't forget this!
+
+// Use smart pointers:
+std::unique_ptr&lt;MyClass&gt; ptr = std::make_unique&lt;MyClass&gt;();
+// ... use ptr
+// No need to delete - memory is automatically freed when ptr goes out of scope
+</code></pre>
+                
+                <h2>Setting Up Your Environment</h2>
+                <p>
+                    To get started with modern C++, you'll need a compiler that supports the latest standards. 
+                    Here are some popular options:
+                </p>
+                
+                <ul>
+                    <li><strong>GCC (GNU Compiler Collection)</strong>: Version 10 or higher recommended for C++20 support</li>
+                    <li><strong>Clang</strong>: Version 10 or higher for good C++20 support</li>
+                    <li><strong>MSVC (Microsoft Visual C++)</strong>: Visual Studio 2019 or higher for C++20 features</li>
+                </ul>
+                
+                <p>
+                    You'll also want a good build system. CMake is widely used and makes it easy to create 
+                    cross-platform projects.
+                </p>
+                
+                <h2>A Simple Modern C++ Example</h2>
+                <p>
+                    Here's a small example that demonstrates some modern C++ features:
+                </p>
+                
+                <pre><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;string&gt;
+#include &lt;algorithm&gt;
+
+// C++17 structured bindings
+std::pair&lt;bool, std::string&gt; processInput(const std::string& input) {
+    if (input.empty()) {
+        return {false, "Input is empty"};
+    }
+    return {true, "Input is valid: " + input};
+}
+
+int main() {
+    // C++11 list initialization
+    std::vector&lt;std::string&gt; names = {"Alice", "Bob", "Charlie"};
+    
+    // C++11 range-based for loop with auto
+    for (const auto& name : names) {
+        std::cout << "Hello, " << name << "!" << std::endl;
+    }
+    
+    // C++11 lambda expression
+    std::sort(names.begin(), names.end(), 
+        [](const std::string& a, const std::string& b) {
+            return a.length() < b.length();
+        });
+    
+    std::cout << "Sorted by length:" << std::endl;
+    for (const auto& name : names) {
+        std::cout << name << std::endl;
+    }
+    
+    // C++17 structured bindings
+    std::string userInput = "Hello, World!";
+    auto [success, message] = processInput(userInput);
+    
+    if (success) {
+        std::cout << message << std::endl;
+    }
+    
+    return 0;
+}
+</code></pre>
+                
+                <h2>Conclusion</h2>
+                <p>
+                    Modern C++ is a much more approachable language than its earlier versions. By embracing 
+                    features like auto type deduction, smart pointers, lambdas, and range-based for loops, 
+                    you can write cleaner, safer code while still enjoying C++'s performance benefits.
+                </p>
+                
+                <p>
+                    In future posts, I'll delve deeper into specific modern C++ features and design patterns.
+                    Stay tuned!
+                </p>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Anjola Aina. All rights reserved.</p>
+        <ul>
+            <li><a href="https://github.com/anj0la"><i class="devicon-github-original"></i></a></li>
+            <li><a href="https://www.linkedin.com/in/anjola-aina/"><i class="devicon-linkedin-plain"></i></a></li>
+        </ul>
+    </footer>
+</body>
+</html>

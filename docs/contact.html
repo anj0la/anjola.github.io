@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact</title>
     <link rel="stylesheet" href="css/reset.css"/> 
     <link rel="stylesheet" href="css/styles.css"/> 
@@ -9,50 +10,70 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />     
+    <script type="text/javascript" src="js/scripts.js"></script>
 </head>
 
 <body>
     <header>
         <nav>
-            <h4>Contact</h4>
+            <div class="home-link"><a href="index.html">Home</a></div>
             <ul>
-                <li><a href="index.html">Home</a></li>
                 <li><a href="projects.html">Projects</a></li>
                 <li><a href="about.html">About</a></li>
+                <li><a href="blog.html">Blog</a></li>
                 <li><a href="">Contact</a></li>
             </ul>        
         </nav>
     </header>
 
     <main>
-
         <section class="top-section">
-            
-            <div class="intro-text"> <!-- Add a wrapper for left content -->
-                <h3>Welcome to my cozy contact corner!</h3>
-                <h1>Contact Info</h1>
-                <p>Phone: 780-714-8203</p>
-                <p>Email: anjola.aina@gmail.com</p>
-                <p>LinkedIn: anjola-aina</p>
-                <p>GitHub: anj0la</p>
+            <div class="intro-text">
+                <h1>Contact Me</h1>
+                <p>Feel free to reach out through the form below or via any of my social platforms.</p>
+            </div>
+        </section>
+
+        <section class="contact-section">
+            <div class="contact-info">
+                <h2>Contact Info</h2>
+                <p><strong>Phone:</strong> 780-714-8203</p>
+                <p><strong>Email:</strong> <a href="mailto:anjola.aina@gmail.com">anjola.aina@gmail.com</a></p>
+                <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/anjola-aina/">anjola-aina</a></p>
+                <p><strong>GitHub:</strong> <a href="https://github.com/anj0la">anj0la</a></p>
             </div>
 
-            <!-- Right side of the page -->
-            <aside>
-                <img src="resources/cat_shy.gif">
-            </aside>
-
+            <div class="contact-form">
+                <h2>Send Me a Message</h2>
+                <form action="https://formspree.io/f/meoavabv" method="POST">
+                    <div class="form-group">
+                        <label for="firstName">First Name</label>
+                        <input type="text" id="firstName" name="firstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" id="lastName" name="lastName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-button">Send Message</button>
+                </form>
+            </div>
         </section>
-        
     </main>
 
     <footer>
-        <p>&copy; 2025 Anjola Aina. All rights reserved. GIFs from <a href="https://getstickerpack.com/stickers/mochi-cat-you.">Sticker maker for WhatsApp.</p>
-            <ul>
+        <p>&copy; 2025 Anjola Aina. All rights reserved.</p>
+        <ul>
             <li><a href="https://github.com/anj0la"><i class="devicon-github-original"></i></a></li>
             <li><a href="https://www.linkedin.com/in/anjola-aina/"><i class="devicon-linkedin-plain"></i></a></li>
         </ul>
     </footer>
-
 </body>
 </html>

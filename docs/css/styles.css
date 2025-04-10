@@ -645,7 +645,7 @@ footer ul li a {
 }
 
 /* == iPhone 12+ Pro Max screens == */
-@media (max-width: 428px) { 
+@media (min-width: 428px) and (max-width: 768px) { 
     .feature-image {
         display: none; /* Hide the image completely */
     }

@@ -600,7 +600,7 @@ footer ul li a {
     
     .feature-image {
         margin-top: 1.5rem;
-        max-width: 60%; /* Increased from 25% to 60% on small screens */
+        max-width: 60%;
         object-fit: contain;
         height: auto;
         align-self: center;
@@ -635,12 +635,35 @@ footer ul li a {
         flex: none;
         width: 100%;
     }
+
+    h1, h2, h3 {
+        text-align: center;
+    }
+    
+    .recent-projects h2, 
+    main > h2 {
+        text-align: center;
+        width: 100%;
+    }
+    
+    .contact-info h2,
+    .contact-form h2 {
+        text-align: center;
+    }
+    
+    section h2 {
+        text-align: center;
+    }
+    
+    .top-section .intro-text p {
+        text-align: center;
+    }
 }
 
 /* == Medium screens == */
 @media (min-width: 769px) and (max-width: 1024px) {
     .feature-image {
-        max-width: 40%; /* Intermediate size for medium screens */
+        max-width: 40%;
     }
 }
 
@@ -652,5 +675,17 @@ footer ul li a {
     
     .feature-project {
         padding: 1rem;
+    }
+}
+
+/* == Additional fix for any container margins == */
+@media (max-width: 1024px) {
+    main {
+        padding: 0 1rem;
+    }
+    
+    section {
+        width: 100%;
+        box-sizing: border-box;
     }
 }

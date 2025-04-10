@@ -646,8 +646,19 @@ footer ul li a {
 
 /* == iPhone 12+ Pro Max screens == */
 @media (max-width: 428px) { 
+    .feature-project {
+        padding: 1rem; 
+        gap: 1rem; 
+    }
+    
     .feature-image {
-        max-width: 50%;
+        max-width: 80%;
         height: auto;
+        margin-top: 0.5rem; 
+        margin-bottom: 0.5rem; 
+    }
+    
+    .feature-text p:last-child {
+        margin-bottom: 0.75rem; 
     }
 }

@@ -647,7 +647,7 @@ footer ul li a {
 /* == iPhone 12+ Pro Max screens == */
 @media (max-width: 428px) { 
     .feature-image {
-        max-width: 80%;
+        max-width: 50%;
         height: auto;
     }
 }

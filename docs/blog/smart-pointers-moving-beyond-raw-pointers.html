@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Pointers: Moving Beyond Raw Pointers in C++ - Blog</title>
+    <link rel="stylesheet" href="../css/reset.css"/> 
+    <link rel="stylesheet" href="../css/styles.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+    <script type="text/javascript" src="../js/scripts.js"></script>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="home-link"><a href="index.html">Home</a></div>
+            <ul>
+                <li><a href="../projects.html">Projects</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../blog.html">Blog</a></li>
+                <li><a href="../contact.html">Contact</a></li>
+            </ul>        
+        </nav>
+    </header>
+
+    <main>
+        <a class="back-to-blog" href="../blog.html">← Back to blog</a>
+        
+        <article class="blog-post">
+            <h1>Smart Pointers: Moving Beyond Raw Pointers in C++</h1>
+            <div class="blog-post-meta">April 14, 2025 · 10 min read</div>
+            
+            <div class="blog-post-content">
+                <h2>The Problem with Raw Pointers</h2>
+                <p>
+                    <span style="font-style: italic;">"Never use raw pointers in C++."</span>
+                </p>
+                <p>
+                    This is a statement that many C++ programmers will tell you today if you need to use pointers. For me, this was confusing because I had always used C++ as "C with more features." I also learned how to program in C before C++, so I was used to the "C-style" way of doing things. Pointers were no exception.
+                </p>
+                <p>
+                    I had experience with pointers from past school projects. For example, this is an old code of mine that I used when I was attempting to create a console snake game:
+                </p>
+                <pre><code>#include "cell.h"
+#define EMPTY_QUEUE 0
+
+// The node struct containing data
+typedef struct node {
+    cell cell;
+    struct node *next;
+} node;
+
+// The queue struct (the snake will be a queue)
+typedef struct queue {
+    node* front;
+    node* rear;
+    int size;
+} queue;
+
+// Function definitions
+queue* create_queue();
+bool is_empty(queue* a_queue);
+void enqueue(queue* a_queue, cell* a_cell);
+node* dequeue(queue* a_queue);
+void free_queue(queue* a_queue);</code></pre>
+                <p>
+                    So when I initially moved to C++, I continued to use raw pointers. I was using a C library Allegro 4.4.2 to create my projects, so they were using raw pointers. My Sprite class looked something like this:
+                </p>
+                <pre><code>#ifndef sprite_h
+#define sprite_h
+#include &lt;allegro.h&gt;
+
+class Sprite {
+private:
+    BITMAP* image;
+    int width;
+    int height;
+    int x_pos;
+    int y_pos;
+    
+public:
+    Sprite() {
+        image = NULL;
+        width = 0;
+        height = 0;
+        x_pos = 0;
+        y_pos = 0;
+    }
+    
+    ~Sprite() {
+        if (image != NULL) {
+            destroy_bitmap(image);
+        }
+    } // destructor
+    
+    bool load(const char* filename) {
+        image = load_bitmap(filename, NULL);
+        if (image != NULL) {
+            width = image->w;
+            height = image->h;
+            return true;
+        }
+        return false; // image is NULL
+    }
+    
+    void draw(BITMAP* dest) {
+        draw_sprite(dest, image, x_pos, y_pos);
+    }
+    
+    int get_width() { return width; }
+    int get_height() { return height; }
+    int get_x_pos() { return x_pos; }
+    int get_y_pos() { return y_pos; }
+    
+    void move_sprite(int x, int y) {
+        x_pos += x;
+        y_pos += y;
+    }
+    
+    bool collided(Sprite* other) {
+        int other_width_offset = other->get_x_pos() + other->get_width();
+        int other_height_offset = other->get_y_pos() + other->get_height();
+        
+        if ((x_pos + width) >= other->get_x_pos() && 
+            x_pos < other_width_offset && 
+            (y_pos + height) >= other->get_y_pos() && 
+            y_pos <= other_height_offset) {
+            return true;
+        }
+        // no collisions occurred
+        return false;
+    }
+};</code></pre>
+                <p>
+                    In this example class, the destructor was correctly deleting the bitmap by calling the corresponding function to destroy the bitmap. However, in the next example, you can see that the memory is not correctly deleted, leading to memory leaks:
+                </p>
+                <pre><code>class Player {
+private:
+    Sprite* images[NUM_IMAGES];
+    Direction dir;
+    int curr_frame;
+    int score;
+    
+public:
+    Player() {
+        for (int i = 0; i < NUM_IMAGES; i++) {
+            images[i] = new Sprite();
+            images[i]->set_speed(SPEED);
+        }
+        score = 0;
+        curr_frame = 0;
+        dir = LEFT;
+        images[curr_frame]->set_x_pos(375);
+        images[curr_frame]->set_y_pos(400);
+        images[curr_frame]->set_alive(true);
+    } // constructor
+    
+    ~Player() {
+        delete[] *images; // Incorrect, need to delete each individual Sprite*
+    } // destructor
+};</code></pre>
+                <h2>Common Memory Management Issues</h2>
+                <p>
+                    First, the destructor is trying to <code>delete[]</code> the first element (<code>*images</code>) as if it were an array—which is incorrect and dangerous.
+                </p>
+                <p>
+                    Second, the array itself is not created with <code>new</code>, or in other words, dynamically allocated. So, I shouldn't even have used <code>delete[]</code>. This is what I should've done to ensure proper memory management:
+                </p>
+                <pre><code>~Player() {
+    for (int i = 0; i < NUM_IMAGES; i++) {
+        delete images[i]; // delete each Sprite
+        images[i] = nullptr; // optional but good practice
+    }
+}</code></pre>
+                <p>
+                    Now see how much work that is? You have to remember to delete the memory that you allocate to avoid dangling pointers.
+                </p>
+                <p>
+                    Let's look at some other examples.
+                </p>
+                <p>
+                    Let's say I was creating an SDL_Window with a raw pointer, and created an alias (i.e., assigning the window to a different variable). So I have two variables that point to the same SDL_Window. Then, I delete the first window manually and try to delete the second one afterwards. This leads to undefined behavior caused by double deletion:
+                </p>
+                <pre><code>#include &lt;SDL.h&gt;
+#include &lt;iostream&gt;
+
+int main(int argc, char* argv[]) {
+    if (SDL_Init(SDL_INIT_VIDEO) != 0) {
+        std::cerr << "SDL Init Error: " << SDL_GetError() << std::endl;
+        return 1;
+    }
+    
+    SDL_Window* window = SDL_CreateWindow("A Bad Window",
+        SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+        640, 480,
+        SDL_WINDOW_RESIZABLE);
+        
+    if (!window) {
+        std::cerr << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
+        SDL_Quit();
+        return 1;
+    }
+    
+    SDL_Window* window_alias = window; // ⚠Simulate transferring ownership (bad idea with raw pointers)
+    
+    // First delete
+    SDL_DestroyWindow(window);
+    std::cout << "Window destroyed once." << std::endl;
+    
+    // window_alias still points to the now-invalid memory
+    SDL_DestroyWindow(window_alias); // ⚠This is undefined behavior: double delete / use-after-free
+    std::cout << "Window destroyed again (bad!)." << std::endl;
+    
+    SDL_Quit();
+    return 0;
+}</code></pre>
+                <p>
+                    We attempted to transfer ownership of the window to the variable <code>window_alias</code>, but because we are using raw pointers, this isn't the case. The variables <code>window</code> and <code>window_alias</code> both point to the same SDL_Window in memory. When we destroy the first window, the memory allocated by SDL_CreateWindow is destroyed. So the SDL_Window does not exist in memory anymore.
+                </p>
+                <p>
+                    However, there still exists a pointer to that now-invalid memory with <code>window_alias</code>.
+                </p>
+                <p>
+                    If we decided to call a function instead of trying to delete it:
+                </p>
+                <pre><code>SDL_HideWindow(window_alias) // ⚠This is undefined behavior: dangling pointer to invalid memory</code></pre>
+                <p>
+                    Then we would have undefined behavior. Not only is this a dangling pointer, but it is a memory leak, because we have access to memory that we shouldn't have access to anymore.
+                </p>
+                <p>
+                    Let's look at one more example to fully understand this.
+                </p>
+                <p>
+                    Let's say we were making a very simple game in SDL that renders a rect onto the screen. When the user requests to close the window, the window is destroyed:
+                </p>
+                <pre><code>#include &lt;SDL.h&gt;
+#include &lt;iostream&gt;
+
+SDL_Window* window = nullptr;
+SDL_Renderer* renderer = nullptr;
+bool is_running = true;
+
+void init() {
+    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+        std::cerr << "SDL_Init Error: " << SDL_GetError() << std::endl;
+        exit(1);
+    }
+    
+    window = SDL_CreateWindow("A Bad Window",
+        SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+        640, 480,
+        SDL_WINDOW_RESIZABLE);
+        
+    if (!window) {
+        std::cerr << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
+        exit(1);
+    }
+    
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    if (!renderer) {
+        std::cerr << "SDL_CreateRenderer Error: " << SDL_GetError() << std::endl;
+        exit(1);
+    }
+}
+
+void handle_events() {
+    SDL_Event event;
+    while (SDL_PollEvent(&event)) {
+        if (event.type == SDL_QUIT) {
+            is_running = false;
+            // Simulate premature cleanup (bad idea)
+            SDL_DestroyWindow(window);
+            window = nullptr;
+            std::cout << "Window destroyed inside event handler!" << std::endl;
+        }
+    }
+}
+
+void render() {
+    // ⚠ Ownership problem: window is destroyed, renderer might now be invalid
+    SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
+    SDL_RenderClear(renderer);
+    SDL_RenderPresent(renderer);
+}
+
+void clean_up() {
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window); // ❌ already destroyed!
+    SDL_Quit();
+}
+
+int main(int argc, char* argv[]) {
+    init();
+    
+    while (is_running) {
+        handle_events();
+        render(); // ⚠ Crashes or behaves weirdly after window is destroyed
+    }
+    
+    clean_up();
+    return 0;
+}</code></pre>
+                <p>
+                    We can see that we have a similar issue to the first one. This time, the <code>handle_events</code> function seems to "own" the SDL_window on a first glance. But then we see in the <code>clean_up</code> function that the window is destroyed there too.
+                </p>
+                <p>
+                    Another issue is that the renderer relies on the window, so if the window is destroyed before the renderer, then it may be invalid and either crash or behave weirdly.
+                </p>
+                <p>
+                    We can see here that it is really confusing to know when the window should be released and who owns the window.
+                </p>
+                
+                <h2>Enter Smart Pointers</h2>
+                <p>
+                    We can see that there are many problems with raw pointers. For a language like C, we just have to be aware of these issues and keep track of them ourselves. We can create structs that allow us to better manage them, but at the end of the day, it's up to us programmers to implement this.
+                </p>
+                <p>
+                    In C++ however, this has already been solved for us. We don't need to worry about ownership issues, handle the details of memory management, and are much less error-prone. The solution is: smart pointers.
+                </p>
+                <p>
+                    Smart pointers are a class that manages memory by automatically deallocating the memory it points to when it goes out of scope. By doing so, it prevents memory leaks and dangling pointers.
+                </p>
+                <p>
+                    They are essentially a wrapper around a raw pointer, with automatic memory management and ensuring that resources are always released even when exceptions occur.
+                </p>
+                <p>
+                    It's amazing because they really do take that issue and fix it. You don't have to worry about those issues with raw pointers anymore.
+                </p>
+                <p>
+                    To use them, you just include the following header:
+                </p>
+                <pre><code>#include &lt;memory&gt;</code></pre>
+                <p>
+                    There are three kinds of smart pointers: a <code>unique_ptr</code> (one person), a <code>shared_ptr</code> (multiple people) and a <code>weak_ptr</code> (an observer).
+                </p>
+                
+                <h3>std::unique_ptr</h3>
+                <p>
+                    A <code>std::unique_ptr</code> provides exclusive ownership of an object. This means that only one unique_ptr can point to a given object. An <code>std::unique_ptr</code> is a wrapper around a raw pointer with no copy constructor. This means that the unique ptr cannot be copied, and can only be moved (<code>std::move</code>). If it is moved, you are effectively "transferring" ownership. 
+                </p>
+                <p>
+                    You can fetch as many raw pointers to that memory as you like, but the move semantics of the unique_ptr absolve those raw pointers of any ownership and thus the responsibility of freeing the memory (you would call these "non-owning raw pointers" since they don't own the heap block they point to).
+                </p>
+                <p>
+                    The unique_ptr also has a convenient destructor that automatically frees the memory when it's destroyed. It basically means you no longer have to do manual memory management, yet the lifetime of your memory is as well-defined as always, unlike e.g. in garbage collection.
+                </p>
+                <p>
+                    This is what makes <code>std::unique_ptr</code> the recommended smart pointer when needed. It makes it easier to understand the code because you know that this object owns the pointer and controls its lifetime. You know when it gets destroyed. Readability is super important as a programmer, and you want to make your code more readable when possible. So use those unique_ptrs and make your C++ bearable to read!
+                </p>
+                
+                <h3>std::shared_ptr</h3>
+                <p>
+                    An <code>std::shared_ptr</code> allows multiple <code>std::shared_ptrs</code> to point to the same object using reference counting to determine when the object can be deallocated. A shared_ptr internally has two references, one for the pointer and an additional reference block. 
+                </p>
+                <p>
+                    Looking at the SDL_Window example above, if for some reason we wanted to create two references to the window, we would use shared_ptrs (but really only one instance should be holding a window). A shared_ptr may be easier to use in terms of coding, but in terms of readability and knowing the lifetimes of the object it points to, it is similar to raw pointers. It gives up control, meaning multiple objects share ownership, rather than one object owning it. Unless you need a reference counted object, use unique_ptrs.
+                </p>
+                
+                <h3>std::weak_ptr</h3>
+                <p>
+                    An <code>std::weak_ptr</code> is a non-owning pointer that can look or observe an object that is managed by a shared_ptr. It does not participate in its reference counting and can be very useful to solve the dangling pointer problem.
+                </p>
+                <p>
+                    By letting a <code>std::shared_ptr</code> manage the object, and using <code>std::weak_ptr</code> for users of the object, the users can check if the object is valid by calling <code>expired()</code> or <code>lock()</code>.
+                </p>
+                
+                <h2>Conclusion</h2>
+                <p>
+                    Now you can see the issues with using raw pointers in C++ and the solution: smart pointers. They eliminate many common memory management problems while making your code more readable and maintainable.
+                </p>
+                <p>
+                    In my Penguin Framework project (which I described in my <a href="building-a-cpp-game-framework.html">previous post</a>), I'm using smart pointers throughout the codebase. For example, the SDL window is now managed by a unique_ptr with a custom deleter:
+                </p>
+                <pre><code>class PF_Window {
+private:
+    std::unique_ptr<SDL_Window, void(*)(SDL_Window*)> window;
+    Vector2i size;
+    Vector2i min_size;
+    Vector2i max_size;
+    String title;
+    bool resizable;
+    bool hidden;
+    bool minimized;
+    bool maximized;
+    
+    // More flags...
+    
+public:
+    PF_Window(const char* p_title = "", Vector2i p_size = Vector2i(640, 480), PF_WindowFlags p_flags = PF_WindowFlags::None);
+    SDL_Window* get_window();
+    
+    void set_title(const char* new_title);
+    void set_max_size(Vector2i p_max_size);
+    void set_min_size(Vector2i p_min_size);
+    void resize(Vector2i new_size);
+    
+    // More methods...
+};</code></pre>
+                <p>
+                    This approach has dramatically simplified memory management in the framework, eliminated a class of bugs related to ownership, and made the code more robust against memory leaks and crashes.
+                </p>
+                <p>
+                    So remember: when working with modern C++, embrace smart pointers and say goodbye to the headaches of manual memory management!
+                </p>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Anjola Aina. All rights reserved.</p>
+        <ul>
+            <li><a href="https://github.com/anj0la"><i class="devicon-github-original"></i></a></li>
+            <li><a href="https://www.linkedin.com/in/anjola-aina/"><i class="devicon-linkedin-plain"></i></a></li>
+        </ul>
+    </footer>
+</body>
+</html>

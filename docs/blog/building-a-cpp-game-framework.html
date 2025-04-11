@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building Penguin Framework: A Modern C++ Game Library - Blog</title>
+    <link rel="stylesheet" href="../css/reset.css"/> 
+    <link rel="stylesheet" href="../css/styles.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+    <script type="text/javascript" src="../js/scripts.js"></script>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="home-link"><a href="index.html">Home</a></div>
+            <ul>
+                <li><a href="../projects.html">Projects</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../blog.html">Blog</a></li>
+                <li><a href="../contact.html">Contact</a></li>
+            </ul>        
+        </nav>
+    </header>
+
+    <main>
+        <a class="back-to-blog" href="../blog.html">← Back to blog</a>
+        
+        <article class="blog-post">
+            <h1>Building Penguin Framework: A Modern C++ Game Library</h1>
+            <div class="blog-post-meta">April 11, 2025 · 15 min read</div>
+            
+            <div class="blog-post-content">
+                <h2>Introduction</h2>
+                <p>
+                    <span style="font-style: italic;">"If you want to make a game, don't make your own game engine."</span>
+                </p>
+                <p>
+                    This is a popular statement that many people tell aspiring game developers. Tackling both your game engine and game will inevitably slow down the progress of your game. Your game engine will never be as good as the industry standards—Unreal Engine, Unity, or more indie-friendly engines like Godot or Game Maker.
+                </p>
+                <p>
+                    If I wanted to make a commercial 3D game, I wouldn't create my own engine. It would take me decades before I would be happy with it and ready to finally start a game. And have you tried learning OpenGL? I took one look at the DirectX 11 code that Visual Studio 2022 generates, and the amount of code needed to simply render a cube onto the screen with colors is mind-blowing.
+                </p>
+                <p>
+                    So for a commercial 3D game (say, something similar to Harvest Moon and Stardew Valley but in 3D), I would choose Unreal. It reminds me of Roblox Studio, which I had learned and used for years. I'm also quite comfortable with C++ through previous projects and have used it to create games with Allegro 4.4.2, a game library.
+                </p>
+                <p>
+                    But... I don't have a strong enough PC. Or the time. Or the patience. Or desire.
+                </p>
+                <p>
+                    Don't get me wrong, I still want to create such a game in the future and am slowly learning 3D art with Blender. Yet, when I use these engines, it feels like something is missing. They force me to organize my projects in a certain way, leaving me with little freedom. If I wanted to gain some freedom, I'd have to modify the engine code myself.
+                </p>
+                <p>
+                    Reading 10,000+ lines of code to add refactoring into Godot's engine? Not my cup of tea.
+                </p>
+                <p>
+                    Also, these engines have so much going on when I only need a small subset of their features. If I'm making a 2D game, I only need 2D-related items. I don't care about the 3D functionality.
+                </p>
+                <p>
+                    Lastly, I enjoy creating things from the ground up. In one of my old games, I implemented collision detection using an AABB (axis-aligned bounding box). It was amazing seeing my own collision detection system work in-game. Yes, Godot has Area2D nodes and amazing collision detection, but how is the detection done? With my implementation, I understood how it worked, and that was important to me.
+                </p>
+                
+                <h2>Game Frameworks: The Middle Ground</h2>
+                <p>
+                    Now that I've highlighted the issues I've faced with game engines, you'd think I would announce that I'm creating my own game engine, right?
+                </p>
+                <p>
+                    You'd be half right. Game engines are too bloated for me. I prefer having a simple library or framework that gives me just enough to create games while allowing me to extend its capabilities and maintain the flexibility that game engines take away.
+                </p>
+                <p>
+                    Game frameworks like Monogame, SFML, LOVE, Raylib, and Pygame give you more freedom by handling lower-level abstractions of windows, rendering, textures, and fonts. They usually offer input handling and some sort of frame rate management. They offer much less than game engines, which is exactly what I want.
+                </p>
+                <p>
+                    I used a game library called Allegro 4.4.2 to create a few games: Snake, Ocean Cleaning Frenzy, and Candy Invaders. It was fun organizing my code how I wanted and building a game from there.
+                </p>
+                <p>
+                    I used C and C++ to construct those games, and it was not pretty. Mainly because Allegro 4.4.2 was an old C library with some "quirks" to say the least. This is how I was able to add FPS support in one of these games:
+                </p>
+                <pre><code>// FPS timer implementation
+void increment_speed_counter() {
+    // Increment timer for FPS calculation
+    speed_counter++;
+}
+END_OF_FUNCTION(increment_speed_counter)
+
+// In initialization
+LOCK_VARIABLE(speed_counter);
+LOCK_FUNCTION(increment_speed_counter);
+install_int_ex(increment_speed_counter, BPS_TO_TIMER(60));
+
+// In game loop
+while (speed_counter > 0) {
+    speed_counter--;
+    if (!paused) {
+        run_game_logic();
+        timer--;
+    }
+}
+</code></pre>
+                <p>
+                    Yeah, not pretty. Sometimes the game would crash, and I had no clue why. Newsflash: it was an issue with the game library.
+                </p>
+                <p>
+                    And don't get me started on my archaic C++ code. I was using <code>new</code> and <code>delete</code> everywhere in my classes. I would create objects with <code>new</code> and not delete them afterward, relying on the program to "remember" to free the allocated memory:
+                </p>
+                <pre><code>#define NUM_IMAGES 4
+#define SPEED 5
+enum Direction { LEFT, RIGHT };
+                    
+class Player {
+private:
+    Sprite* images[NUM_IMAGES];
+    Direction dir;
+    int curr_frame;
+    int score;
+    
+public:
+    Player() {
+        for (int i = 0; i < NUM_IMAGES; i++) {
+            images[i] = new Sprite();
+            images[i]->set_speed(SPEED);
+        }
+        score = 0;
+        curr_frame = 0;
+        dir = LEFT;
+        images[curr_frame]->set_x_pos(375);
+        images[curr_frame]->set_y_pos(400);
+        images[curr_frame]->set_alive(true);
+    } // constructor 
+
+    ~Player() {
+        delete[] *images; // Incorrect, need to delete each individual Sprite*
+    } // destructor
+};
+</code></pre>
+                <p>
+                    So I had knowledge of an outdated framework and knew how to code in C++ if I treated it like C's slightly more sophisticated brother. Not ideal.
+                </p>
+                <p>
+                    I wanted to improve my knowledge of modern C++. That meant no more using <code>new</code>/<code>delete</code> everywhere, using smart pointers, using vectors instead of C-style arrays, and <span style="font-style: italic;">finally</span> using <code>std::string</code> over <code>char*</code> pointers. Using those modern features with Allegro 4.4.2 caused issues, so it was like I was being set up for failure.
+                </p>
+                <p>
+                    Then again, Allegro 4.4.2 was released over 15 years ago, and the C++ standard back then didn't really support <code>std::string</code> as it does now.
+                </p>
+                
+                <h2>A Modern C++ Project</h2>
+                <p>
+                    So it's clear that I wanted to improve my C++ skills and develop industry-relevant abilities. But what does this have to do with game frameworks?
+                </p>
+                <p>
+                    Around Christmas, I got into watching people create their own frameworks using lower-level libraries such as SDL, GLAD, and GLFW. They would handle creating the window, polling events, input checking, and a rendering target. Everything else was left up to you. It was amazing seeing people build their own frameworks using these lower-level libraries, and I realized that's what I wanted to do.
+                </p>
+                <p>
+                    This became my new project for this year.
+                </p>
+                <p>
+                    I chose to create a game framework in C++ for two main reasons:
+                </p>
+                <ol style="list-style-type: decimal;">
+                    <li>
+                        I wanted a C++ framework similar to Monogame and Pygame, providing solid functionality and implementations for things you don't want to worry about, such as FPS support and good asset loading. I haven't found a C++ game framework that does this well, so why not build it?
+                    </li>
+                    <li>
+                        I wanted to make game development with C++ frameworks easier. Some open-source game frameworks that allow C++ require you to build binaries and can be intimidating. I wanted to make the build process as simple as possible, providing prebuilt binaries and detailed tutorials.
+                    </li>
+                </ol>
+                <p>
+                    Really though, I wanted to build something in modern C++, and luckily, I was interested in game frameworks, so it all worked out.
+                </p>
+                <p>
+                    I did my research before starting, getting familiar with lower-level libraries like SDL, GLFW, and higher-level libraries like SFML. I also had to learn CMake, since I wanted the project to work on multiple platforms.
+                </p>
+                <p>
+                    And on December 27th, 2024, I started work on my first attempt at a modern C++ game framework: <span style="font-style: italic">Penguin2D.</span>
+                </p>
+                
+                <h2>Penguin2D - A Great First Attempt</h2>
+                <p>
+                    I chose SDL to handle the lower-level abstractions since commercial games have been created and released with it. Plus, it's a mature library that's maintained and updated consistently, so I wouldn't have the same issues as with Allegro 4.4.2.
+                </p>
+                <p>
+                    I initially used a GitHub repository that implemented modern C++ with SDL3, the newest SDL version. It helped me get a jumpstart on abstract game objects like vectors and rects. It also helped me understand smart pointers. It took time to understand the difference between unique pointers and shared pointers, but after reading an article recommending unique pointers whenever possible, it started to make sense.
+                </p>
+                <p>
+                    The first thing I created using SDL was the PenguinWindow, which only supported resizing the window or setting the window title. I stored no information about the window; I simply passed the parameters to the corresponding SDL function:
+                </p>
+                <pre><code>class PenguinWindow {
+public:
+    void setWindowTitle(const std::string& title) {
+        Exception::throw_if(
+            !SDL_SetWindowTitle(window.get(), title.c_str()),
+            "There was an error setting the window title.",
+            WINDOW_ERROR
+        );
+    }
+    
+    void resize(Vector2<<code>int</code>> new_size) {
+        Exception::throw_if(
+            !SDL_SetWindowSize(window.get(), new_size.x, new_size.y),
+            "There was an error setting the window's new size",
+            WINDOW_ERROR
+        );
+    }
+    
+    // No internal state stored
+};
+</code></pre>
+                <p>
+                    I also created an exception class to wrap all SDL calls so I could better catch and deal with errors instead of having people check if the call returned true or false. This is something I've kept, even in my updated framework.
+                </p>
+                <p>
+                    I created the rendering context, PenguinRenderer, and was able to render simple shapes onto the screen. I took it a step further and implemented circles and ellipses, which aren't built into SDL and required some high school trigonometry knowledge.
+                </p>
+                <p>
+                    After adding the event handler and input, the next task was to create an FPS timer. I used the <a href=https://gafferongames.com/post/fix_your_timestep><span style="text-decoration: underline;">Fix Your Timestep</span></a> blog as a starting point and created my own FPS timer without any SDL functionality:
+                </p>
+                <pre><code>class PenguinTimer {
+private:
+    double delta_time;
+    double accumulator = 0.0;
+    int frame_count = 0;
+    std::chrono::steady_clock::time_point prev_time = std::chrono::steady_clock::now();
+    std::chrono::steady_clock::time_point fps_start_time = prev_time;
+    
+public:
+    PenguinTimer(double dt = 1.0 / 60.0) : 
+    delta_time(dt) {}
+    
+    void update() {
+        auto curr_time = std::chrono::steady_clock::now();
+        double frame_time = std::chrono::duration<<code>double</code>(curr_time - prev_time).count();
+        if (frame_time > 0.25) {
+            frame_time = 0.25;
+        }
+        prev_time = curr_time;
+        accumulator += frame_time;
+    }
+
+    void consume_time() {
+        accumulator -= delta_time;
+    }
+
+    bool should_update() const {
+        return accumulator >= delta_time;
+    }
+
+    double get_delta_time() const {
+        return delta_time;
+    }
+};
+</code></pre>
+                <p>
+                    I made other components like a base class and a game window combining many of the things described above, and created my first game, Pong, with Penguin2D.
+                </p>
+                <p>
+                    The framework was relatively good, so why did I decided to start from scratch?
+                </p>
+                
+                <h2>C++ ABI Compatibility Issues</h2>
+                <p>
+                    The Pong game worked when it was in the <span style="font-weight: bold;">same project</span> as the framework. When I changed Penguin2D to a dynamic library, I encountered issues. Mainly with <code>std::string</code> producing weird characters, and some interesting behavior with <code>std::unordered_map</code>. 
+                </p>
+                <p>
+                    After some research, it turns out that my pong game project was using a different C++ compiler. Since C++ doesn't have ABI compatibility, if two projects aren't using the same compiler, some things may not work. Also, the implementation of <code>std::string</code> and <code>std::unordered_map</code> changes between compilers and versions of C++. I could have forced the Pong game to use the same compiler as Penguin2D, but if someone else wanted to use my framework, they would face the same issue.
+                </p>
+                <p>
+                    So, I changed function signatures requiring <code>std::string</code> to use <code>const char*</code> instead, and used arrays instead of unordered maps. Luckily, <code>std::vector</code> and <code>std::array</code> are quite stable and didn't cause problems.
+                </p>
+                <p>
+                    Eventually, I got Penguin2D to work, and everything functioned correctly except for the input in the game window. After spending weeks debugging, I realized I had overcomplicated things, and there were issues with basic components like the Vector class.
+                </p>
+                <p>
+                    I also had no way to "prove" that my game framework worked. I wrote no tests, opting for an executable file to test all the functionality after implementing something—and then never testing it again.
+                </p>
+                <p>
+                    Penguin2D was in <span style="font-style: italic;">dire</span> need of some TLC, and I was getting tired.
+                </p>
+                <p>
+                    So I took a break for about a month, worked on a cool script to filter Reddit data, and came back at the end of March to start work on Penguin2D V2, or rather, <span style="font-style: italic">Penguin Framework.</span>
+                </p>
+                
+                <h2>Penguin Framework</h2>
+                <p>
+                    Penguin Framework aims to take the positive parts of Penguin2D and improve on them.
+                </p>
+                <p>
+                    With a better understanding of C++, I decided to bump up the C++ version from C++17 to C++20, which allowed me to do quite a few cool things. For example, in the old Vector class, I had to write 6 separate operator functions:
+                </p>
+                <pre><code>template <<code>typename T = float</code>>
+class Vector2 {
+public:
+    T x, y;
+    
+    // Six separate comparison operators
+    bool operator==(const Vector2<<code>T</code>>& other) const {
+        return x == other.x && y == other.y;
+    }
+    
+    bool operator!=(const Vector2<<code>T</code>>& other) const {
+        return x != other.x || y != other.y;
+    }
+    
+    bool operator<(const Vector2<<code>T</code>>& other) const {
+        return x < other.x && y < other.y;
+    }
+    
+    bool operator<=(const Vector2<<code>T</code>>& other) const {
+        return x <= other.x && y <= other.y;
+    }
+    
+    bool operator>(const Vector2<<code>T</code>>& other) const {
+        return x > other.x && y > other.y;
+    }
+    
+    bool operator>=(const Vector2<<code>T</code>>& other) const {
+        return x >= other.x && y >= other.y;
+    }
+};
+</code></pre>
+                <p>
+                    Now, I only write a custom operator for the equal <code>==</code> and not equal <code>!=</code> operators, and use the three-way comparison operator <code><=></code> to handle the rest:
+                </p>
+                <pre><code>class Vector2 {
+public:
+    float x, y;
+    
+    // Equality operators
+    constexpr bool operator==(const Vector2& v) const {
+        return x == v.x && y == v.y;
+    }
+    
+    constexpr bool operator!=(const Vector2& v) const {
+        return x != v.x || y != v.y;
+    }
+    
+    // Three-way comparison operator (C++20)
+    constexpr auto operator<=>(const Vector2&) const noexcept = default;
+};
+</code></pre>
+                <p>
+                    There are also many more vector functions, inspired by other game engines like Godot. There's a <code>normalize</code> function which is helpful to move at the same speed diagonally (and a <code>normalized</code> function returning a new Vector).
+                </p>
+                <p>
+                    There are functions to calculate the cross and dot product, as well as rounding the vector.
+                </p>
+                <p>
+                    The biggest change to the Vector2 class is separating the float and int versions. The Vector2 class before utilized a template class, so the type could be int, float, or double. This made code more verbose, because I would use <code>Vector2&lt;float&gt;</code> for regular game objects but <code>Vector2&lt;int&gt;</code> for the game window, which wasn't pretty.
+                </p>
+                <p>
+                    So I separated the float and int representations and created two classes: Vector2 (float) and Vector2i (int). The Vector2i class has fewer functions than the Vector2 class, and instead of typing <code>Vector2&lt;type&gt;</code>, the new window just takes a Vector2i object:
+                </p>
+                <pre><code>class Vector2i {
+public:
+    int x, y;
+    
+    Vector2i() : x(0), y(0) {}
+    Vector2i(int x, int y) : x(x), y(y) {}
+    
+    // Less functions than Vector2
+    
+    constexpr bool operator==(const Vector2i& v) const {
+        return x == v.x && y == v.y;
+    }
+    
+    constexpr bool operator!=(const Vector2i& v) const {
+        return x != v.x || y != v.y;
+    }
+    
+    // Three-way comparison operator (C++20)
+    constexpr auto operator<=>(const Vector2i&) const noexcept = default;
+};
+</code></pre>
+                <p>
+                    Another update was the Colour class. If the user entered a number larger than 255, the old class would accept it and do nothing:
+                </p>
+                <pre><code>class Colour {
+public:
+    unsigned int red = 0;   
+    unsigned int green = 0; 
+    unsigned int blue = 0;  
+    unsigned int alpha = 255;
+
+    constexpr Colour(unsigned int r, unsigned int g, unsigned int b, unsigned int a)
+        : red(r), green(g), blue(b), alpha(a) {
+    }
+    
+    // No validation of values
+};
+</code></pre>
+                <p>
+                    For the new Colour class, I utilized the <code>std::clamp</code> function. An unsigned integer means there are no negative numbers, but numbers above 255 are now clamped to 255:
+                </p>
+                <pre><code>class Colour {
+public:
+    unsigned int r, g, b, a; 
+
+    constexpr Colour() : r(0), g(0), b(0), a(255) {}
+
+    constexpr Colour(unsigned int p_r, unsigned int p_g, unsigned int p_b, unsigned int p_a) : 
+        r(std::clamp(p_r, 0u, 255u)), 
+        g(std::clamp(p_g, 0u, 255u)), 
+        b(std::clamp(p_b, 0u, 255u)),
+        a(std::clamp(p_a, 0u, 255u)) {}
+};
+</code></pre>
+                <p>
+                    I also removed the Colours namespace from the file and created its own file. I populated it with colors inspired by HTML color codes.
+                </p>
+                <p>
+                    The biggest change from Penguin2D is that I'm using googletest, a C++ testing framework, to verify that my code works. I've created over 100 tests so far to ensure that the Vector2, Vector2i, Rect2, Rect2i, Circle2, and Colour classes work as expected. This makes things easier as I move to more complicated components, such as the window or renderer which require these objects. By ensuring that the fundamentals work, I know where to start debugging when issues arise.
+                </p>
+                <p>
+                    Currently, I'm working on the window and window events. The window has been completely revamped, as my initial window implementation was very minimal. I've finished creating the code for the window, including the supported window flags and size. I'm currently working on an internal string class so I can test that the window is constructed correctly.
+                </p>
+                <p>
+                    In my old window class, I stored absolutely nothing:
+                </p>
+                <pre><code>class PenguinWindow {
+
+public:
+    void setWindowTitle(const std::string& title) {
+        Exception::throw_if(
+            !SDL_SetWindowTitle(window.get(), title.c_str()),
+            "There was an error setting the window title.",
+            WINDOW_ERROR
+        );
+    }
+    
+    void resize(Vector2<<code>int</code>> new_size) {
+        Exception::throw_if(
+            !SDL_SetWindowSize(window.get(), new_size.x, new_size.y),
+            "There was an error setting the window's new size",
+            WINDOW_ERROR
+        );
+    }
+    
+    // No internal state stored
+};
+</code></pre>
+                <p>
+                    In my new window class, I store all the flags, the window size, min/max size, and am working to store the title:
+                </p>
+                <pre><code>class PF_Window {
+private:
+    std::unique_ptr<<code>SDL_Window, void(*)(SDL_Window*)</code>> window;
+    Vector2i size;
+    Vector2i min_size;
+    Vector2i max_size;
+    String title;
+    bool resizable;
+    bool hidden;
+    bool minimized;
+    bool maximized;
+
+    // More flags...
+    
+public:
+    PF_Window(const char* p_title = "", Vector2i p_size = Vector2i(640, 480), PF_WindowFlags p_flags = PF_WindowFlags::None);
+    SDL_Window* get_window();
+    
+    void set_title(const char* new_title);
+    void set_max_size(Vector2i p_max_size);
+    void set_min_size(Vector2i p_min_size);
+    void resize(Vector2i new_size);
+    
+    // More methods...
+};
+</code></pre>
+                <p>
+                    The new window class also allows you to create callback functions which internally register them to the window event class.
+                </p>
+                <p>
+                    Finally, the window has a poll events function to internally handle events. This means users won't have to create an event manager anymore; it'll be handled by the game framework.
+                </p>
+                <p>
+                    Once I've finished implementing and testing the window and its events, I'll move onto the renderer, which doesn't need much rework, and then add support for text and sprites.
+                </p>
+                
+                <h2>Conclusion</h2>
+                <p>
+                    As you can see, my desire isn't to build a game, but to build something that can make games. In the future, I would love to create games, but for now, I'm really interested in the building process itself. It's is fun in its own right and allows me to be creative in a different way. 
+                </p>
+                <p>
+                    If you want to make games professionally, I would still recommend choosing a mature game engine.
+                </p>
+                <p>
+                    But if you're more curious about how game engines are created, not particularly interested in making a living from games, and just want to learn, then try making your own game framework from scratch. It's a rewarding journey.
+                </p>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Anjola Aina. All rights reserved.</p>
+        <ul>
+            <li><a href="https://github.com/anj0la"><i class="devicon-github-original"></i></a></li>
+            <li><a href="https://www.linkedin.com/in/anjola-aina/"><i class="devicon-linkedin-plain"></i></a></li>
+        </ul>
+    </footer>
+</body>
+</html>

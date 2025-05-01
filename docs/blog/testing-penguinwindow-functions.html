@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing PenguinWindow Functions - Why Unit Tests Weren't Enough - Blog</title>
+    <link rel="stylesheet" href="../css/reset.css"/> 
+    <link rel="stylesheet" href="../css/styles.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+    <script type="text/javascript" src="../js/scripts.js"></script>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="home-link"><a href="../index.html">Home</a></div>
+            <ul>
+                <li><a href="../projects.html">Projects</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../blog.html">Blog</a></li>
+                <li><a href="../contact.html">Contact</a></li>
+            </ul>        
+        </nav>
+    </header>
+
+    <main>
+        <a class="back-to-blog" href="../blog.html">← Back to blog</a>
+        
+        <article class="blog-post">
+            <h1>Testing PenguinWindow Functions - Why Unit Tests Weren't Enough</h1>
+            <div class="blog-post-meta">May 02, 2025 · 8 min read</div>
+            
+            <div class="blog-post-content">
+                <h2>Introduction</h2>
+                <p>
+                    Making your own game framework can be a daunting task, with no clear end in sight. It's more complex than your typical C++ project and requires you to clean about many things: creating a stable API, creating shared and static libraries with CMake, handling dependencies, and much more.
+                </p>
+                <p>
+                    Things get even more complicated when you want to build a cross-platform project in C++. This is where the complexities of CMake truly come out. Not to mention, C++ itself is a special language with quirks not found in others I'm used to, like Java and Python.
+                </p>
+                <p>
+                    Nevertheless, I took it upon myself to build a cross-platform game framework with C++ and CMake. I wanted to create something different from the available C++ game frameworks—something that offers more to developers familiar with higher-level frameworks. Penguin Framework aims to provide a higher level of abstraction than similar frameworks in C++.
+                </p>
+                <p>
+                    But before I can offer that abstraction, I have to build the intermediate objects that enable it. That is, abstracting lower-level systems such as window creation and mathematical game objects.
+                </p>
+                <p>
+                    When creating such systems, it's important to validate that they work as intended. This is where tests come in, as they allow you to verify that your functions and classes behave as expected.
+                </p>
+                <p>
+                    There are many ways to write tests, but for Penguin Framework, since I was mainly interested in testing class creation and function calls, unit tests were the perfect option.
+                </p>
+                <p>
+                    So, I embarked on a journey to create unit tests for all the classes I had recently finalized: <code>Vector2</code>, <code>Rect2</code> (and their integer counterparts), <code>Circle2</code>, <code>Colour</code>, <code>String</code>, and the <code>Window</code> class.
+                </p>
+                <p>
+                    The math and string classes were quite easy to write unit tests for using GoogleTest, and I quickly achieved 100% coverage for them.
+                </p>
+                <p>
+                    The window, however… was another issue.
+                </p>
+                
+                <h2>The Initial Problem</h2>
+                <p>
+                    The <code>Vector2/Vector2i</code>, <code>Rect2/Rect2i</code>, <code>Circle2</code>, <code>Colour</code>, and <code>String</code> classes all had one thing in common: they relied on no external dependencies. This meant that their functions would work as intended if implemented correctly.
+                </p>
+                <p>
+                    It also meant that I didn't need to link against the SDL library. Test executables would still run fine on their own.
+                </p>
+                <p>
+                    But that wasn't the case for the <code>Window</code> class. Since it depended on SDL, I needed to link the test executable against the SDL library. After doing so, I expected it to work like the others.
+                </p>
+                <p>
+                    And it didn't.
+                </p>
+                <p>
+                    The tests failed <strong style="font-weight: bold">before</strong> they even ran, because of the test fixture itself. SDL was not being correctly set up, and I had no clue why. Here's what the test fixture initially looked like:
+                </p>
+                <pre><code>class WindowTestFixture : public ::testing::Test {
+protected:
+    void SetUp() override {
+        ASSERT_EQ(SDL_Init(SDL_INIT_VIDEO), true) << "SDL video subsystem could not be initialized because of: " << SDL_GetError();
+    }
+
+    void TearDown() override {
+        SDL_Quit();
+    }
+};</code></pre>
+                <p>
+                    After some debugging, I found out that <code>SDL_Init()</code> was returning a nonzero value, but not a negative one like -1. It was returning a positive number: specifically, 1.
+                    This confused me, and <code>SDL_GetError()</code> wasn't even reporting any error.
+                </p>
+                <p>
+                    I knew SDL worked in a non-testing environment. I had created a game with my older Penguin2D code that relied on SDL. So I knew the issue had to do with the testing environment.
+                </p>
+                <p>
+                    The testing environment had no display, while the non-testing environment did. This likely meant that graphics drivers were either missing or disabled. That was most likely why SDL wasn't initializing as intended.
+                </p>
+                <p>
+                    Since I wanted to test SDL in a headless environment (i.e., no GUI), I needed a way to make SDL initialize without needing access to a display.
+                </p>
+                <p>
+                    Luckily, SDL makes it pretty easy to set up a "dummy" environment using the SDL_SetHint function. I set the video driver to this dummy value before calling <code>SDL_Init()</code>. So, I updated my test fixture with the following line of code:
+                </p>
+                <pre><code>SDL_SetHint(SDL_HINT_VIDEO_DRIVER, "dummy");</code></pre>
+                <p>
+                    And it worked.
+                </p>
+                <p>
+                    Only one line of code was added, and my tests were running.
+                </p>
+                <p>
+                    So we're done, right?
+                </p>
+                <p>
+                    Unfortunately, no…
+                </p>
+                
+                <h2>The Unexpected Challenge</h2>
+                <p>
+                    My tests were running, but not all of them were passing. Some functions failed due to my own implementation errors, so I fixed the issues in the .cpp file and the tests passed as expected.
+                </p>
+                <p>
+                    However, I noticed something interesting: functions like <code>set_title()</code> or <code>enable_borders()</code> worked fine, but functions like <code>maximize()</code> or <code>resize()</code> consistently failed. As I looked through the implementation of the Window class, I realized what the issue was.
+                </p>
+                
+                <h3>State-Changing vs Property-Changing</h3>
+                <p>
+                    <strong style="font-weight: bold">Property-changing functions</strong> (e.g., <code>set_title()</code>, <code>enable_borders()</code>) just modify metadata. These work fine in a dummy context.
+                </p>
+                <p>
+                    <strong style="font-weight: bold">State-changing functions</strong> (e.g., <code>maximize()</code>, <code>minimize()</code>, <code>restore()</code>) rely on real OS interaction. These either silently fail or do nothing when using the dummy video driver.
+                </p>
+                <p>
+                    The internal flags in those state-changing functions correctly changed (or remained consistent) throughout the function calls, but the underlying SDL function itself failed. So I wasn't really guaranteeing that the function executed successfully, just that the internal flags were updated.
+                </p>
+
+                <h2>What Unit Tests Can and Can't Do</h2>
+                <p>
+                    Unit tests are great for verifying <strong style="font-weight: bold">intent</strong>—i.e., did your logic try to maximize the window?
+                    But they can't verify <strong style="font-weight: bold">outcomes</strong> that rely on external systems, like a real display manager.
+                </p>
+                
+                <h3>How I Adapted</h3>
+                <p>
+                    I updated my unit tests to verify <strong style="font-weight: bold">internal flag changes</strong>, not SDL's external behavior. I also added clear notes to the state-changing tests, indicating that their actual functionality must be verified at the integration level. I also updated my GitHub project roadmap to include plans for integration tests to validate real OS interactions.
+                </p>
+                
+                <h2>Conclusion</h2>
+                <p>
+                    Not all bugs are in your logic. Some bugs I wouldn't have found without unit testing, but I also wouldn't have realized the limitations of unit testing without this experience. Sometimes, the test environment limits what's possible.
+                </p>
+                <p>
+                    Unit tests should focus on validating <strong style="font-weight: bold">logic</strong>, not external effects. Validating those external effects has to be done with other types of tests, like integration tests or example games.
+                </p>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Anjola Aina. All rights reserved.</p>
+        <ul>
+            <li><a href="https://github.com/anj0la"><i class="devicon-github-original"></i></a></li>
+            <li><a href="https://www.linkedin.com/in/anjola-aina/"><i class="devicon-linkedin-plain"></i></a></li>
+        </ul>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building a C++ Library with CMake</title>
+    <link rel="stylesheet" href="../css/reset.css"/> 
+    <link rel="stylesheet" href="../css/styles.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+    <script type="text/javascript" src="../js/scripts.js"></script>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="home-link"><a href="../index.html">Home</a></div>
+            <ul>
+                <li><a href="../projects.html">Projects</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../blog.html">Blog</a></li>
+                <li><a href="../contact.html">Contact</a></li>
+            </ul>        
+        </nav>
+    </header>
+
+    <main>
+        <a class="back-to-blog" href="../blog.html">← Back to blog</a>
+        
+        <article class="blog-post">
+            <h1>Building a C++ Library with CMake</h1>
+            <div class="blog-post-meta">April 25, 2025 · 10 min read</div>
+            
+            <div class="blog-post-content">
+                <h2>Introduction</h2>
+                <p>
+                    When I started creating Penguin Framework, I thought it would be easy to rebuild the library. I believed that I would be spending more time fleshing out my existing classes and adding more functionality. 
+                </p>
+                <p>
+                    And that's what I did... initially.
+                </p>
+                <p>
+                    I was expanding my window class, adding window events and callback functionality, and even starting working on a better input system. I also had robust tests with 100% coverage.
+                </p>
+                <p>
+                    As I was working on the keyboard class, I realized that I was creating too many things and needed to start building up the library. I was linking specific .cpp files instead of the library to test the functionality of these classes, and this was not going to be maintainable. 
+                </p>
+                <p>
+                    So, I decided to go back to my topmost level CMake file and build my library.
+                </p>
+                <p>
+                    But little did I know that this was going to be my biggest challenge yet...
+                </p>
+                
+                <h2>CMake Is... Confusing</h2>
+                <p>
+                    When I created Penguin2D, it took me about 5 hours to create the most simple project:
+                </p>
+                <pre><code># CMakeList.txt : CMake project for penguin_2d, include source and define
+# project specific logic here.
+#
+cmake_minimum_required (VERSION 3.20)
+
+# Add the executable first.
+add_executable (penguin_2d 
+    "src/penguin_2d.cpp" 
+    "src/penguin_2d.cpp" 
+    "src/penguin_window.cpp" 
+    "src/penguin_renderer.cpp")
+
+# TODO: Add tests and install targets if needed.
+target_include_directories(penguin_2d PRIVATE ${PENGUIN_INCLUDE_DIR})
+
+# Link to the actual SDL3 library.
+# find_package(SDL3)
+target_link_libraries(penguin_2d PRIVATE SDL3::SDL3)</code></pre>
+                <p>
+                    I wasn't even building a library at this point, but trying to figure out how to make the executable, and how to even get SDL installed on my computer. Sure, a quick search could show you how to get this file, but back when SDL3 wasn't stable, the installation guide was super confusing. Plus, this was my first time dealing with cross-platform support in C++. All the other C++ projects I had used Solution files so they were Windows-only programs.
+                </p>
+                <p>
+                    I was able to install SDL3 eventually by adding it as a subdirectory via the command:
+                </p>
+                <pre><code>add_subdirectory(SDL)</code></pre>
+                <p>
+                    I did come back a few months later after finishing my pong game to construct the library, since I felt like I had enough components made to have a library. 
+                </p>
+                <p>
+                    This is where things became even more confusing. 
+                </p>
+                <p>
+                    This is how I initially got my library to work when creating my pong game (so I could use the add_library command):
+                </p>
+                <pre><code>cmake_minimum_required (VERSION 3.20)
+
+# Define the Penguin2D library
+add_library(Penguin2D STATIC
+    src/core/penguin_window.cpp
+    src/core/penguin_renderer.cpp
+    src/core/penguin_text_renderer.cpp
+    src/core/penguin_game_window.cpp
+    src/core/penguin_timer.cpp
+    src/core/penguin_event_handler.cpp
+    src/core/penguin_input.cpp
+    src/rendering/penguin_font.cpp
+    src/rendering/penguin_text.cpp
+    src/rendering/penguin_sprite.cpp)
+
+# Include directories for the library 
+target_include_directories(Penguin2D PUBLIC
+    "${PENGUIN_INCLUDE_DIR}/common"
+    "${PENGUIN_INCLUDE_DIR}/core"
+    "${PENGUIN_INCLUDE_DIR}/entities"
+    "${PENGUIN_INCLUDE_DIR}/rendering"
+    "${SDL3_INCLUDE_DIRS}"  # Add SDL3 include directories to PUBLIC
+    "${SDL3_TTF_INCLUDE_DIR}" # Add SDL3_ttf include directories to PUBLIC
+    "${SDL3_IMAGE_INCLUDE_DIR}" # Add SDL3_image include directories to PUBLIC
+)
+
+# Link dependencies for the library
+target_link_libraries(Penguin2D PRIVATE
+    SDL3::SDL3
+    SDL3_ttf::SDL3_ttf
+    SDL3_image::SDL3_image
+)
+
+# Include subdirectories to compile examples of using Penguin2D
+add_subdirectory(examples/pong)</code></pre>
+                <p>
+                    The library was static, and the SDL dependency was shared. I wanted to make the library shared, so when I decided to make it shared, that's when so many issues arose. Things from certain C++ standard library objects not working as intended (e.g., std::string, std::unordered_map) to input being broken.
+                </p>
+                <p>
+                    Realizing that I had to copy .dll files into their appropriate locations (e.g., bin or lib), I then started spamming add_custom_command functions to copy the required .dll files there. It became a truly convoluted mess. It got to the point where I did not understand what my CMake file was doing anymore:
+                </p>
+                <pre><code># CMakeList.txt : CMake project for penguin_2d, include source and define
+# project specific logic here.
+#
+cmake_minimum_required (VERSION 3.20)
+
+# Define the Penguin2D library
+add_library(Penguin2D SHARED
+    src/core/penguin_window.cpp
+    src/core/penguin_renderer.cpp
+    src/core/penguin_text_renderer.cpp
+    src/core/penguin_game_window.cpp
+    src/core/penguin_timer.cpp
+    src/core/penguin_event_handler.cpp
+    src/core/penguin_input.cpp
+    src/rendering/penguin_font.cpp
+    src/rendering/penguin_text.cpp
+    )
+
+# Automatically export all symbols on Windows
+if(WIN32)
+    set_target_properties(Penguin2D PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS ON)
+endif()
+
+# Set the output directories for Penguin2D
+set_target_properties(Penguin2D PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${OUTPUT_DIR}/bin"   # DLLs
+    LIBRARY_OUTPUT_DIRECTORY "${OUTPUT_DIR}/lib"   # Shared Libraries
+    ARCHIVE_OUTPUT_DIRECTORY "${OUTPUT_DIR}/lib"   # Static Libraries
+)
+
+# Include directories for the library 
+target_include_directories(Penguin2D PUBLIC
+    "${PENGUIN_INCLUDE_DIR}/common"
+    "${PENGUIN_INCLUDE_DIR}/core"
+    "${PENGUIN_INCLUDE_DIR}/rendering"
+    "${SDL3_INCLUDE_DIR}"
+    "${SDL3_TTF_INCLUDE_DIR}"
+)
+
+# Copy SDL3 DLLs to bin/ after build
+add_custom_command(TARGET Penguin2D POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+    "$<TARGET_FILE:SDL3::SDL3>" "${OUTPUT_DIR}/bin/"
+    "$<TARGET_FILE:SDL3_ttf::SDL3_ttf>" "${OUTPUT_DIR}/bin/"
+)
+
+# Copy Penguin2D header files into the include directory without subdirectories
+file(GLOB_RECURSE HEADER_FILES "${PENGUIN_INCLUDE_DIR}/*.hpp")
+add_custom_command(TARGET Penguin2D POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E make_directory "${OUTPUT_DIR}/include"  # Ensure the include directory exists
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+    ${HEADER_FILES} "${OUTPUT_DIR}/include/"
+)
+
+# Copy SDL3 header files
+add_custom_command(TARGET Penguin2D POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    "${SDL3_INCLUDE_DIR}" "${OUTPUT_DIR}/include/"
+    "${SDL3_TTF_INCLUDE_DIR}" "${OUTPUT_DIR}/include/"
+)
+
+# Link dependencies for the library
+target_link_libraries(Penguin2D PUBLIC
+    SDL3::SDL3
+    SDL3_ttf::SDL3_ttf
+)</code></pre>
+                <p>
+                    Like, why was I copying SDL headers if I wanted the implementation details of my classes to be hidden from the user? At that point, it would be better just to use SDL on its own, right?
+                </p>
+                <p>
+                    And GLOBing is very much NOT recommended with CMake. I was also creating the include directory on the fly.
+                </p>
+                <p>
+                    At this point, I knew that if I wanted to create a C++ library with CMake, that I needed to find an example that I could refer to.
+                </p>
+                
+                <h2>CMake Example Library</h2>
+                <p>
+                    Thankfully, there are wonderful people on the Internet who have provided simple templates for people like me, who don't have much CMake knowledge. I was able to find a C++ library template project on <a href="https://github.com/pananton/cpp-lib-template" style="text-decoration: underline;">GitHub</a> and I spent the following days dissecting it.
+                </p>
+                <p>
+                    I really appreciated how they used comments to separate the CMake file into sections related to functionality, which made it much easier for me to understand what each section was doing. Sometimes, I wonder why us programmers are so against commenting, especially with a language like CMake with its "quirks".
+                </p>
+                <p>
+                    After about a week or so, I had updated my CMake file:
+                </p>
+                <pre><code>#----------------------------------------------------------------------------------------------------------------------
+# Project Settings
+#----------------------------------------------------------------------------------------------------------------------
+
+cmake_minimum_required(VERSION 3.15...3.31)
+project(penguin_framework VERSION 0.1.0 LANGUAGES CXX)
+
+#----------------------------------------------------------------------------------------------------------------------
+# General Settings
+#----------------------------------------------------------------------------------------------------------------------
+
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+include(GNUInstallDirs)
+include(FetchContent)
+include(CMakePackageConfigHelpers)
+include(GenerateExportHeader)
+
+string(COMPARE EQUAL "${CMAKE_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}" IS_TOP_LEVEL)
+
+#----------------------------------------------------------------------------------------------------------------------
+# Build Options
+#----------------------------------------------------------------------------------------------------------------------
+
+option(PF_BUILD_TESTS "Build Shared Library" ON) 
+set(BUILD_SHARED_LIBS ${PF_BUILD_SHARED})
+
+option(PF_BUILD_TESTS "Build Penguin Framework tests" ON) 
+option(PF_BUILD_EXAMPLES "Build Penguin Framework examples" OFF) 
+option(PF_BUILD_DOCS "Build Penguin Framework documentation" OFF)
+option(PF_INSTALL "Generate target for installing Penguin Framework" ${IS_TOP_LEVEL})
+
+# Other functionality…</code></pre>
+                <p>
+                    It's much more readable, with messages to help me during the building process and comments all throughout the file. I know that if the build process fails, then I can go back to the last successful message, and know the issue is in that section. I also installed headers, meaning that I could use &lt;&gt; brackets instead of "" brackets to find my header files. 
+                </p>
+                <p>
+                    It even taught me how to make my library discoverable via find_package(). Admittedly, I haven't tested to see that the functionality works, but it's nice that there's a reference I can go to once I get to that point.
+                </p>
+                
+                <h2>Conclusion</h2>
+                <p>
+                    Building a C++ library with CMake was a long and tough experience. Even after I created my cmake file and the project was built, I spent time rewriting and fixing my code so that it compiled. I also had to copy specific dll files to the tests folders to make them work again.
+                </p>
+                <p>
+                    However, I'm glad that I spent this time learning more about CMake and how to use it to create a library. I feel like my CMake knowledge has increased, and I'm excited to continue work on Penguin Framework.
+                </p>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Anjola Aina. All rights reserved.</p>
+        <ul>
+            <li><a href="https://github.com/anj0la"><i class="devicon-github-original"></i></a></li>
+            <li><a href="https://www.linkedin.com/in/anjola-aina/"><i class="devicon-linkedin-plain"></i></a></li>
+        </ul>
+    </footer>
+</body>
+</html>

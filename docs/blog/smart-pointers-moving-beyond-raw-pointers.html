@@ -172,7 +172,7 @@ public:
                 <pre><code>~Player() {
     for (int i = 0; i < NUM_IMAGES; i++) {
         delete images[i]; // delete each Sprite
-        images[i] = nullptr; // optional but good practice
+        images[i] = nullptr;
     }
 }</code></pre>
                 <p>
@@ -184,7 +184,7 @@ public:
                 <p>
                     Let's say I was creating an SDL_Window with a raw pointer, and created an alias (i.e., assigning the window to a different variable). So I have two variables that point to the same SDL_Window. Then, I delete the first window manually and try to delete the second one afterwards. This leads to undefined behavior caused by double deletion:
                 </p>
-                <pre><code>#include &lt;SDL.h&gt;
+                <pre><code>#include &lt;SDL3/SDL.h&gt;
 #include &lt;iostream&gt;
 
 int main(int argc, char* argv[]) {
@@ -193,10 +193,7 @@ int main(int argc, char* argv[]) {
         return 1;
     }
     
-    SDL_Window* window = SDL_CreateWindow("A Bad Window",
-        SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-        640, 480,
-        SDL_WINDOW_RESIZABLE);
+    SDL_Window* window = SDL_CreateWindow("A Bad Window", 640, 480, SDL_WINDOW_RESIZABLE);
         
     if (!window) {
         std::cerr << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
@@ -204,14 +201,14 @@ int main(int argc, char* argv[]) {
         return 1;
     }
     
-    SDL_Window* window_alias = window; // ⚠Simulate transferring ownership (bad idea with raw pointers)
+    SDL_Window* window_alias = window; // Simulate transferring ownership (bad idea with raw pointers)
     
     // First delete
     SDL_DestroyWindow(window);
     std::cout << "Window destroyed once." << std::endl;
     
     // window_alias still points to the now-invalid memory
-    SDL_DestroyWindow(window_alias); // ⚠This is undefined behavior: double delete / use-after-free
+    SDL_DestroyWindow(window_alias); // This is undefined behavior: double delete / use-after-free
     std::cout << "Window destroyed again (bad!)." << std::endl;
     
     SDL_Quit();
@@ -226,7 +223,7 @@ int main(int argc, char* argv[]) {
                 <p>
                     If we decided to call a function instead of trying to delete it:
                 </p>
-                <pre><code>SDL_HideWindow(window_alias) // ⚠This is undefined behavior: dangling pointer to invalid memory</code></pre>
+                <pre><code>SDL_HideWindow(window_alias) // This is undefined behavior: dangling pointer to invalid memory</code></pre>
                 <p>
                     Then we would have undefined behavior. Not only is this a dangling pointer, but it is a memory leak, because we have access to memory that we shouldn't have access to anymore.
                 </p>
@@ -236,7 +233,7 @@ int main(int argc, char* argv[]) {
                 <p>
                     Let's say we were making a very simple game in SDL that renders a rect onto the screen. When the user requests to close the window, the window is destroyed:
                 </p>
-                <pre><code>#include &lt;SDL.h&gt;
+                <pre><code>#include &lt;SDL3/SDL.h&gt;
 #include &lt;iostream&gt;
 
 SDL_Window* window = nullptr;
@@ -244,15 +241,12 @@ SDL_Renderer* renderer = nullptr;
 bool is_running = true;
 
 void init() {
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+    if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         std::cerr << "SDL_Init Error: " << SDL_GetError() << std::endl;
         exit(1);
     }
     
-    window = SDL_CreateWindow("A Bad Window",
-        SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-        640, 480,
-        SDL_WINDOW_RESIZABLE);
+    window = SDL_CreateWindow("A Bad Window", 640, 480, SDL_WINDOW_RESIZABLE);
         
     if (!window) {
         std::cerr << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
@@ -280,7 +274,7 @@ void handle_events() {
 }
 
 void render() {
-    // ⚠ Ownership problem: window is destroyed, renderer might now be invalid
+    // Ownership problem - window is destroyed, renderer might now be invalid
     SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
     SDL_RenderClear(renderer);
     SDL_RenderPresent(renderer);
@@ -288,7 +282,7 @@ void render() {
 
 void clean_up() {
     SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window); // ❌ already destroyed!
+    SDL_DestroyWindow(window); // already destroyed
     SDL_Quit();
 }
 
@@ -297,7 +291,7 @@ int main(int argc, char* argv[]) {
     
     while (is_running) {
         handle_events();
-        render(); // ⚠ Crashes or behaves weirdly after window is destroyed
+        render(); // Crashes or behaves weirdly after window is destroyed
     }
     
     clean_up();
@@ -318,16 +312,13 @@ int main(int argc, char* argv[]) {
                     We can see that there are many problems with raw pointers. For a language like C, we just have to be aware of these issues and keep track of them ourselves. We can create structs that allow us to better manage them, but at the end of the day, it's up to us programmers to implement this.
                 </p>
                 <p>
-                    In C++ however, this has already been solved for us. We don't need to worry about ownership issues, handle the details of memory management, and are much less error-prone. The solution is: smart pointers.
+                    In C++ however, we don't need to worry about ownership issues, or handle the details of memory management, as long as we use smart pointers.
                 </p>
                 <p>
-                    Smart pointers are a class that manages memory by automatically deallocating the memory it points to when it goes out of scope. By doing so, it prevents memory leaks and dangling pointers.
+                    <strong style="font-weight: bold;">Smart pointers</strong> are a class that manages memory by automatically deallocating the memory it points to when it goes out of scope. By doing so, it prevents memory leaks and dangling pointers.
                 </p>
                 <p>
                     They are essentially a wrapper around a raw pointer, with automatic memory management and ensuring that resources are always released even when exceptions occur.
-                </p>
-                <p>
-                    It's amazing because they really do take that issue and fix it. You don't have to worry about those issues with raw pointers anymore.
                 </p>
                 <p>
                     To use them, you just include the following header:
@@ -348,7 +339,7 @@ int main(int argc, char* argv[]) {
                     The unique_ptr also has a convenient destructor that automatically frees the memory when it's destroyed. It basically means you no longer have to do manual memory management, yet the lifetime of your memory is as well-defined as always, unlike e.g. in garbage collection.
                 </p>
                 <p>
-                    This is what makes <code>std::unique_ptr</code> the recommended smart pointer when needed. It makes it easier to understand the code because you know that this object owns the pointer and controls its lifetime. You know when it gets destroyed. Readability is super important as a programmer, and you want to make your code more readable when possible. So use those unique_ptrs and make your C++ bearable to read!
+                    This is what makes <code>std::unique_ptr</code> the recommended smart pointer when needed. It makes it easier to understand the code because you know that this object owns the pointer and controls its lifetime. You know when it gets destroyed. Readability is super important as a programmer, and you want to make your code more readable when possible. So use an <code>std::unique_ptr</code> and make your C++ bearable to read!
                 </p>
                 
                 <h3>std::shared_ptr</h3>
@@ -356,7 +347,7 @@ int main(int argc, char* argv[]) {
                     An <code>std::shared_ptr</code> allows multiple <code>std::shared_ptrs</code> to point to the same object using reference counting to determine when the object can be deallocated. A shared_ptr internally has two references, one for the pointer and an additional reference block. 
                 </p>
                 <p>
-                    Looking at the SDL_Window example above, if for some reason we wanted to create two references to the window, we would use shared_ptrs (but really only one instance should be holding a window). A shared_ptr may be easier to use in terms of coding, but in terms of readability and knowing the lifetimes of the object it points to, it is similar to raw pointers. It gives up control, meaning multiple objects share ownership, rather than one object owning it. Unless you need a reference counted object, use unique_ptrs.
+                    Looking at the SDL_Window example above, if for some reason we wanted to create two references to the window, we would use shared_ptrs (but really only one instance should be holding a window). A shared_ptr may be easier to use in terms of coding, but in terms of readability and knowing the lifetimes of the object it points to, it is similar to raw pointers. It gives up control, meaning multiple objects share ownership, rather than one object owning it. Unless you need a reference counted object, use an <code>std::unique_ptr</code>.
                 </p>
                 
                 <h3>std::weak_ptr</h3>
@@ -369,39 +360,9 @@ int main(int argc, char* argv[]) {
                 
                 <h2>Conclusion</h2>
                 <p>
-                    Now you can see the issues with using raw pointers in C++ and the solution: smart pointers. They eliminate many common memory management problems while making your code more readable and maintainable.
+                    Now you can see the issues with using raw pointers in C++ and the solution: <strong style="font-weight: bold;">smart pointers</strong>. They eliminate many common memory management problems while making your code more readable and maintainable.
                 </p>
-                <p>
-                    In my Penguin Framework project (which I described in my <a href="building-a-cpp-game-framework.html">previous post</a>), I'm using smart pointers throughout the codebase. For example, the SDL window is now managed by a unique_ptr with a custom deleter:
-                </p>
-                <pre><code>class PF_Window {
-private:
-    std::unique_ptr<SDL_Window, void(*)(SDL_Window*)> window;
-    Vector2i size;
-    Vector2i min_size;
-    Vector2i max_size;
-    String title;
-    bool resizable;
-    bool hidden;
-    bool minimized;
-    bool maximized;
-    
-    // More flags...
-    
-public:
-    PF_Window(const char* p_title = "", Vector2i p_size = Vector2i(640, 480), PF_WindowFlags p_flags = PF_WindowFlags::None);
-    SDL_Window* get_window();
-    
-    void set_title(const char* new_title);
-    void set_max_size(Vector2i p_max_size);
-    void set_min_size(Vector2i p_min_size);
-    void resize(Vector2i new_size);
-    
-    // More methods...
-};</code></pre>
-                <p>
-                    This approach has dramatically simplified memory management in the framework, eliminated a class of bugs related to ownership, and made the code more robust against memory leaks and crashes.
-                </p>
+                
                 <p>
                     So remember: when working with modern C++, embrace smart pointers and say goodbye to the headaches of manual memory management!
                 </p>

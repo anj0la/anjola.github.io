@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 2 - Learning Weighted Graph Algorithms - Blog</title>
+    <link rel="stylesheet" href="../css/reset.css"/> 
+    <link rel="stylesheet" href="../css/styles.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+    <script type="text/javascript" src="../js/scripts.js"></script>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="home-link"><a href="../index.html">Home</a></div>
+            <ul>
+                <li><a href="../projects.html">Projects</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../blog.html">Blog</a></li>
+                <li><a href="../contact.html">Contact</a></li>
+            </ul>        
+        </nav>
+    </header>
+
+    <main>
+        <a class="back-to-blog" href="../blog.html">← Back to blog</a>
+        
+        <article class="blog-post">
+            <h1>Week 2 - Learning Weighted Graph Algorithms</h1>
+            <div class="blog-post-meta">May 16, 2025 · 8 min read</div>
+            
+            <div class="blog-post-content">
+                <h2>Exploring Weighted Graph Algorithms</h2>
+                <p>
+                    This week, I spent time learning some of the most important algorithms used on weighted graphs. I studied Dijkstra's Algorithm, Bellman-Ford, and Floyd-Warshall, as well as Prim's and Kruskal's Algorithm.
+                </p>
+                <p>
+                    I'm super proud of the questions that I solved this week on LeetCode. It feels like I'm putting what I'm learning into practice. I'm already feeling better prepared to answer various DFS/BFS problems. I was even able to write a solution to <a href="https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/description/" style="text-decoration:underline;">Find the City with the Smallest Number of Neighbours</a> on LeetCode. The solution uses a modified Dijkstra and stops exploring paths that have exceeded the threshold.
+                </p>
+                
+                <h2>LeetCode Challenge: Find the City With the Smallest Number of Neighbors</h2>
+                <p>
+                    The problem asks us to find the city that has the smallest number of cities that can be reached through some path with distance at most <code>distanceThreshold</code>. If there are multiple such cities, we need to return the city with the largest number.
+                </p>
+                <p>
+                    This is my solution using a modified Dijkstra's algorithm:
+                </p>
+                <pre><code>import heapq
+
+class Solution:
+    def findTheCity(self, n: int, edges: List[List[int]], distanceThreshold: int) -> int:
+        min_city_dist, max_city = float('inf'), 0
+        
+        # Build the adjacency list
+        adj = [[] for _ in range(n)]
+        for u, v, weight in edges:
+            adj[u].append((v, weight))
+            adj[v].append((u, weight))
+            
+        # Call Dijkstra's algorithm for each city
+        for city in range(n):
+            # Get the number of cities that satisfy the distanceThreshold
+            num_cities = self.dijkstra(adj, city, n, distanceThreshold)
+            
+            if num_cities <= min_city_dist: # Found a city with smaller # of cities satisfying the threshold
+                min_city_dist = num_cities
+                max_city = city
+                
+        return max_city
+    
+    def dijkstra(self, adj: List[List[int]], source: int, n: int, distanceThreshold: int) -> int:
+        dist = [float('inf')] * n
+        dist[source] = 0
+        visited = [False] * n
+        pq = [(0, source)]
+        
+        while pq:
+            curr_dist, u = heapq.heappop(pq)
+            
+            # Skip paths that are greater than threshold
+            if curr_dist > distanceThreshold:
+                continue
+                
+            # Skip if already visited
+            if visited[u]:
+                continue
+                
+            visited[u] = True
+            
+            # Perform relaxation on each neighbouring edge ONCE
+            for v, weight in adj[u]:
+                if curr_dist + weight < dist[v]:
+                    dist[v] = curr_dist + weight
+                    
+                    # Only add if neighbouring distance is less than threshold
+                    if dist[v] <= distanceThreshold:
+                        heapq.heappush(pq, (dist[v], v))
+                        
+        # Return the number of cities from the source that satisfy the distanceThreshold
+        return sum([1 for city, dist_val in enumerate(dist) if city != source and dist_val <= distanceThreshold])
+</code></pre>
+
+                <h2>Optimizing for Performance</h2>
+                <p>
+                    Although the solution has a time complexity of O((V³) log V), similar to the LeetCode editorial solution, it runs faster due to the early stopping condition.
+                </p>
+                <p>
+                    This solution shines in terms of space complexity. The original LeetCode solution has a space complexity of O(V²), due to the result used to find the shortest path between any two vertices. The space complexity of my solution is O(V + E), for the adjacency list and other auxiliary data structures such as the priority queue.
+                </p>
+                <p>
+                    With my solution, I didn't need a 2D array. I modified Dijkstra's Algorithm to return the number of cities that satisfy the threshold instead of returning all the distances. There was no need for me to store the results in an array—I could directly use the result and compare it to the minimum city found so far.
+                </p>
+
+                <h2>Key Optimizations in My Solution</h2>
+                <ol style="list-style-type: decimal;">
+                    <li>
+                        <strong style="font-weight:bold;">Early Termination:</strong> The algorithm stops exploring paths once they exceed the distance threshold, avoiding unnecessary computations.
+                    </li>
+                    <li>
+                        <strong style="font-weight:bold;">Efficient Space Usage:</strong> Instead of storing all shortest paths in a 2D array, I directly count the number of cities that satisfy the threshold.
+                    </li>
+                    <li>
+                        <strong style="font-weight:bold;">Optimized Dijkstra Implementation:</strong> The implementation uses a priority queue for efficiency and includes a visited array to prevent revisiting nodes.
+                    </li>
+                </ol>
+
+                <h2>Looking Ahead</h2>
+                <p>
+                    I start trees next week and am excited to continue to learn more and get better at LeetCode! Studying daily has already made me a better programmer, and I feel more prepared for coding interviews.
+                </p>
+                <p>
+                    I'll see you next week!
+                </p>
+                <p>
+                    Until then,<br>
+                    Anjola
+                </p>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Anjola Aina. All rights reserved.</p>
+        <ul>
+            <li><a href="https://github.com/anj0la"><i class="devicon-github-original"></i></a></li>
+            <li><a href="https://www.linkedin.com/in/anjola-aina/"><i class="devicon-linkedin-plain"></i></a></li>
+        </ul>
+    </footer>
+</body>
+</html>
